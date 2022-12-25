@@ -1,0 +1,5 @@
+local:
+  dialect: postgres
+  datasource: dbname=gophkeeper user=postgres password=*** sslmode=disable host=localhost port=49153
+  dir: migrations
+  table: migrations

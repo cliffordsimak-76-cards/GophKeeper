@@ -1,0 +1,57 @@
+syntax = "proto3";
+
+package gophkeeper.v1;
+
+option go_package = "github.com/cliffordsimak-76-cards/gophkeeper/pkg/gophkeeper-api/v1;api";
+
+service CardService {
+  rpc Create(CreateCardRequest) returns (Card) {}
+
+  rpc Update(UpdateCardRequest) returns (Card) {}
+
+  rpc Get(GetCardRequest) returns (Card) {}
+
+  rpc ListAvailableCards(ListAvailableCardsRequest) returns (ListAvailableCardsResponse) {}
+}
+
+message Card {
+  string id = 1;
+  string name = 2;
+  string number = 3;
+  string holder = 4;
+  string expire = 5;
+  string cvc = 6;
+}
+
+message CreateCardRequest {
+  string name = 1;
+  string number = 2;
+  string holder = 3;
+  string expire = 4;
+  string cvc = 5;
+}
+
+message UpdateCardRequest {
+  string id = 1;
+  string name = 2;
+  string number = 3;
+  string holder = 4;
+  string expire = 5;
+  string cvc = 6;
+}
+
+message GetCardRequest{
+  string id = 1;
+}
+
+message ListAvailableCardsRequest{
+}
+
+message AvailableCard {
+  string id = 1;
+  string name = 2;
+}
+
+message ListAvailableCardsResponse{
+  repeated AvailableCard cards = 1;
+}

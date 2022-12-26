@@ -19,6 +19,7 @@ func CreateCardRequestFromPb(req *api.CreateCardRequest, userID string) *model.C
 
 func UpdateCardRequestFromPb(req *api.UpdateCardRequest, userID string) *model.Card {
 	return &model.Card{
+		ID:     req.GetId(),
 		Name:   req.GetName(),
 		UserID: userID,
 		Number: req.GetNumber(),

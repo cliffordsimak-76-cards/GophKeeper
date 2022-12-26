@@ -10,15 +10,24 @@ import (
 )
 
 type Group struct {
-	CardRepository CardRepository
-	UserRepository UserRepository
+	AccountRepository AccountRepository
+	CardRepository    CardRepository
+	UserRepository    UserRepository
 }
 
 func NewGroup(client db.Client) *Group {
 	return &Group{
-		CardRepository: NewCardRepositoryImpl(client),
-		UserRepository: NewUserRepositoryImpl(client),
+		AccountRepository: NewAccountRepositoryImpl(client),
+		CardRepository:    NewCardRepositoryImpl(client),
+		UserRepository:    NewUserRepositoryImpl(client),
 	}
+}
+
+type AccountRepository interface {
+	Create(context.Context, *model.Account) (*model.Account, error)
+	Update(context.Context, *model.Account) (*model.Account, error)
+	Get(context.Context, string) (*model.Account, error)
+	List(context.Context, *AccountListFilter) ([]*model.Account, error)
 }
 
 type CardRepository interface {

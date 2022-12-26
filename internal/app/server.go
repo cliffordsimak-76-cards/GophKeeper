@@ -5,6 +5,7 @@ import (
 	"log"
 	"net"
 
+	"github.com/cliffordsimak-76-cards/gophkeeper/internal/app/accountservice"
 	"github.com/cliffordsimak-76-cards/gophkeeper/internal/app/authservice"
 	"github.com/cliffordsimak-76-cards/gophkeeper/internal/app/cardservice"
 	"github.com/cliffordsimak-76-cards/gophkeeper/internal/auth"
@@ -27,9 +28,11 @@ func Run(ctx context.Context, cfg *config.Config) error {
 	s := grpc.NewServer(serverOptions...)
 
 	authService := authservice.NewService(env.repoGroup, env.jwt, env.crypto)
+	accountService := accountservice.NewService(env.repoGroup, env.auth)
 	cardService := cardservice.NewService(env.repoGroup, env.auth)
 
 	api.RegisterAuthServiceServer(s, authService)
+	api.RegisterAccountServiceServer(s, accountService)
 	api.RegisterCardServiceServer(s, cardService)
 
 	listener, err := net.Listen("tcp", cfg.GRPCAddr)

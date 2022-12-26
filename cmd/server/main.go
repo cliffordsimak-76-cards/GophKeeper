@@ -4,9 +4,10 @@ import (
 	"context"
 	"log"
 
+	_ "github.com/jackc/pgx/stdlib"
+
 	"github.com/cliffordsimak-76-cards/gophkeeper/internal/app"
 	"github.com/cliffordsimak-76-cards/gophkeeper/internal/config"
-	_ "github.com/jackc/pgx/stdlib"
 )
 
 func main() {

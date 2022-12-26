@@ -38,7 +38,6 @@ func getInputWithMask(label string, validator validator) string {
 		Templates: templates,
 		Validate:  promptui.ValidateFunc(validator),
 		Mask:      '*',
-		
 	}
 
 	return promtRun(prompt)

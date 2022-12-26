@@ -28,6 +28,6 @@ func ListAvailableCardsToPb(cards []*model.Card) *api.ListAvailableCardsResponse
 func AvailableCardToPb(card *model.Card) *api.AvailableCard {
 	return &api.AvailableCard{
 		Id:   card.ID,
-			Name: card.Name,
+		Name: card.Name,
 	}
 }

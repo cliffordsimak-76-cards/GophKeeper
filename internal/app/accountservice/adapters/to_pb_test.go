@@ -17,17 +17,14 @@ func Test_AccountToPb(t *testing.T) {
 	})
 	t.Run("all data filler", func(t *testing.T) {
 		data := &model.Account{
-			ID:        "id",
-			Name:      "name",
-			Login:     "login",
-			Password:  "password",
-		
+			Name:     "name",
+			Login:    "login",
+			Password: "password",
 		}
 		mapedData := AccountToPb(data)
 		expectedData := &api.Account{
-			Id:       "id",
 			Name:     "name",
-			Login:   "login",
+			Login:    "login",
 			Password: "password",
 		}
 		require.Equal(t, expectedData, mapedData)

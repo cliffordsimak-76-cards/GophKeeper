@@ -1,6 +1,10 @@
 API_PATH 		= api
 PROTO_OUT_DIR	= pkg/gophkeeper-api
 
+.PHONY: cert
+cert:
+	cd cert; ./gen.sh;
+
 .PHONY: gen
 gen:
 	mkdir -p ${PROTO_OUT_DIR}

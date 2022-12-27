@@ -3,6 +3,8 @@
 1. Прописать креды базы данных в файле `dbconfig.yml`
 2. `make migrate`
 3. Прописать строку подключения к базе данных `internal\config\config.go`
+4. `make cert`
+5. `go run ./cmd/server/main.go`
 
 ## Как запустить клиент
 

@@ -4,10 +4,21 @@ package client
 
 import (
 	"context"
+	"crypto/tls"
+	"crypto/x509"
+	"fmt"
+	"log"
+	"os"
 
 	api "github.com/cliffordsimak-76-cards/gophkeeper/pkg/gophkeeper-api"
 	"google.golang.org/grpc"
-	"google.golang.org/grpc/credentials/insecure"
+	"google.golang.org/grpc/credentials"
+)
+
+const (
+	serverCACertFile = "./cert/ca-cert.pem"
+	clientCertFile   = "./cert/client-cert.pem"
+	clientKeyFile    = "./cert/client-key.pem"
 )
 
 type Services interface {
@@ -24,10 +35,15 @@ func NewClient(cfg *Config) (*Client, error) {
 	ctx, cancel := context.WithTimeout(context.Background(), cfg.ServerTimeout)
 	defer cancel()
 
+	tlsCredentials, err := loadTLSCredentials()
+	if err != nil {
+		log.Fatal("cannot load TLS credentials: ", err)
+	}
+
 	conn, err := grpc.DialContext(
 		ctx,
 		cfg.ServerHost,
-		grpc.WithTransportCredentials(insecure.NewCredentials()),
+		grpc.WithTransportCredentials(tlsCredentials),
 	)
 	if err != nil {
 		return nil, err
@@ -37,4 +53,31 @@ func NewClient(cfg *Config) (*Client, error) {
 		AuthClient: api.NewAuthServiceClient(conn),
 		CardClient: api.NewCardServiceClient(conn),
 	}, nil
+}
+
+func loadTLSCredentials() (credentials.TransportCredentials, error) {
+	// Load certificate of the CA who signed server's certificate
+	pemServerCA, err := os.ReadFile(serverCACertFile)
+	if err != nil {
+		return nil, err
+	}
+
+	certPool := x509.NewCertPool()
+	if !certPool.AppendCertsFromPEM(pemServerCA) {
+		return nil, fmt.Errorf("failed to add server CA's certificate")
+	}
+
+	// Load client's certificate and private key
+	clientCert, err := tls.LoadX509KeyPair(clientCertFile, clientKeyFile)
+	if err != nil {
+		return nil, err
+	}
+
+	// Create the credentials and return it
+	config := &tls.Config{
+		Certificates: []tls.Certificate{clientCert},
+		RootCAs:      certPool,
+	}
+
+	return credentials.NewTLS(config), nil
 }

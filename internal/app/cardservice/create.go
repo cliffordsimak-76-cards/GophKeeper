@@ -11,7 +11,7 @@ import (
 	"google.golang.org/grpc/status"
 )
 
-func (s *Service) Create(
+func (s *Service) CreateCard(
 	ctx context.Context,
 	req *api.CreateCardRequest,
 ) (*api.Card, error) {

@@ -9,6 +9,10 @@ const (
 	CreateCard string = "Create card"
 	GetCard    string = "Get card"
 	UpdateCard string = "Update card"
+
+	CreateAccount string = "Create account"
+	GetAccount    string = "Get account"
+	UpdateAccount string = "Update account"
 )
 
 type CommandRunner struct {
@@ -41,6 +45,12 @@ func (r *CommandRunner) run(
 		return r.getCard(ctx)
 	case UpdateCard:
 		return r.updateCard(ctx)
+	case CreateAccount:
+		return r.createAccount(ctx)
+	case GetAccount:
+		return r.getAccount(ctx)
+	case UpdateAccount:
+		return r.updateAccount(ctx)
 	}
 
 	return nil

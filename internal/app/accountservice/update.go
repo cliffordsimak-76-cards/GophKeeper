@@ -11,7 +11,7 @@ import (
 	"google.golang.org/grpc/status"
 )
 
-func (s *Service) Update(
+func (s *Service) UpdateAccount(
 	ctx context.Context,
 	req *api.UpdateAccountRequest,
 ) (*api.Account, error) {

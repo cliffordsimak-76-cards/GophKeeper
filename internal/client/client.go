@@ -24,11 +24,13 @@ const (
 type Services interface {
 	api.AuthServiceClient
 	api.CardServiceClient
+	api.AccountServiceClient
 }
 
 type Client struct {
-	AuthClient api.AuthServiceClient
-	CardClient api.CardServiceClient
+	AuthClient    api.AuthServiceClient
+	CardClient    api.CardServiceClient
+	AccountClient api.AccountServiceClient
 }
 
 func NewClient(cfg *Config) (*Client, error) {
@@ -50,8 +52,9 @@ func NewClient(cfg *Config) (*Client, error) {
 	}
 
 	return &Client{
-		AuthClient: api.NewAuthServiceClient(conn),
-		CardClient: api.NewCardServiceClient(conn),
+		AuthClient:    api.NewAuthServiceClient(conn),
+		CardClient:    api.NewCardServiceClient(conn),
+		AccountClient: api.NewAccountServiceClient(conn),
 	}, nil
 }
 
@@ -73,7 +76,6 @@ func loadTLSCredentials() (credentials.TransportCredentials, error) {
 		return nil, err
 	}
 
-	// Create the credentials and return it
 	config := &tls.Config{
 		Certificates: []tls.Certificate{clientCert},
 		RootCAs:      certPool,

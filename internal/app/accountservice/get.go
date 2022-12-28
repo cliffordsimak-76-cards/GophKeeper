@@ -14,7 +14,7 @@ import (
 	"google.golang.org/grpc/status"
 )
 
-func (s *Service) Get(
+func (s *Service) GetAccount(
 	ctx context.Context,
 	req *api.GetAccountRequest,
 ) (*api.Account, error) {

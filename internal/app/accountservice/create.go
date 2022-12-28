@@ -11,7 +11,7 @@ import (
 	"google.golang.org/grpc/status"
 )
 
-func (s *Service) Create(
+func (s *Service) CreateAccount(
 	ctx context.Context,
 	req *api.CreateAccountRequest,
 ) (*api.Account, error) {

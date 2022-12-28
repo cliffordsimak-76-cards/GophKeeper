@@ -10,6 +10,7 @@ import (
 
 // Card represents users Credit card entry
 type Card struct {
+	ID     string
 	Name   string
 	Number string
 	Expire string
@@ -29,7 +30,7 @@ func (r *CommandRunner) createCard(ctx context.Context) error {
 	card.Holder = getInput("holder:", notEmpty)
 
 	req := buildCreateCardRequest(card)
-	_, err := r.client.CardClient.Create(ctx, req)
+	_, err := r.client.CardClient.CreateCard(ctx, req)
 	if err != nil {
 		log.Printf("error create card: %s", err)
 		return fmt.Errorf("error create card")
@@ -56,7 +57,7 @@ func (r *CommandRunner) getCard(ctx context.Context) error {
 	name := inputSelect("choose card", availableCards.Names)
 
 	getReq := buildGetCardRequest(availableCards.IdByNameMap[name])
-	card, err := r.client.CardClient.Get(ctx, getReq)
+	card, err := r.client.CardClient.GetCard(ctx, getReq)
 	if err != nil {
 		log.Printf("error get card: %s", err)
 		return fmt.Errorf("error get card")
@@ -84,7 +85,7 @@ func (r *CommandRunner) updateCard(ctx context.Context) error {
 	cardName := inputSelect("choose card", availableCards.Names)
 
 	getReq := buildGetCardRequest(availableCards.IdByNameMap[cardName])
-	card, err := r.client.CardClient.Get(ctx, getReq)
+	card, err := r.client.CardClient.GetCard(ctx, getReq)
 	if err != nil {
 		log.Printf("error get card: %s", err)
 		return fmt.Errorf("error get card")
@@ -113,7 +114,7 @@ func (r *CommandRunner) updateCard(ctx context.Context) error {
 	}
 
 	req := buildUpdateCardRequest(newCard)
-	_, err = r.client.CardClient.Update(ctx, req)
+	_, err = r.client.CardClient.UpdateCard(ctx, req)
 	if err != nil {
 		log.Printf("error update card: %s", err)
 		return fmt.Errorf("error update card")

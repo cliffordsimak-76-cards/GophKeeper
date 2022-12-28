@@ -36,44 +36,104 @@ func (m *MockServices) EXPECT() *MockServicesMockRecorder {
 	return m.recorder
 }
 
-// Create mocks base method.
-func (m *MockServices) Create(ctx context.Context, in *api.CreateCardRequest, opts ...grpc.CallOption) (*api.Card, error) {
+// CreateAccount mocks base method.
+func (m *MockServices) CreateAccount(ctx context.Context, in *api.CreateAccountRequest, opts ...grpc.CallOption) (*api.Account, error) {
 	m.ctrl.T.Helper()
 	varargs := []interface{}{ctx, in}
 	for _, a := range opts {
 		varargs = append(varargs, a)
 	}
-	ret := m.ctrl.Call(m, "Create", varargs...)
-	ret0, _ := ret[0].(*api.Card)
+	ret := m.ctrl.Call(m, "CreateAccount", varargs...)
+	ret0, _ := ret[0].(*api.Account)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
 
-// Create indicates an expected call of Create.
-func (mr *MockServicesMockRecorder) Create(ctx, in interface{}, opts ...interface{}) *gomock.Call {
+// CreateAccount indicates an expected call of CreateAccount.
+func (mr *MockServicesMockRecorder) CreateAccount(ctx, in interface{}, opts ...interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	varargs := append([]interface{}{ctx, in}, opts...)
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Create", reflect.TypeOf((*MockServices)(nil).Create), varargs...)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "CreateAccount", reflect.TypeOf((*MockServices)(nil).CreateAccount), varargs...)
 }
 
-// Get mocks base method.
-func (m *MockServices) Get(ctx context.Context, in *api.GetCardRequest, opts ...grpc.CallOption) (*api.Card, error) {
+// CreateCard mocks base method.
+func (m *MockServices) CreateCard(ctx context.Context, in *api.CreateCardRequest, opts ...grpc.CallOption) (*api.Card, error) {
 	m.ctrl.T.Helper()
 	varargs := []interface{}{ctx, in}
 	for _, a := range opts {
 		varargs = append(varargs, a)
 	}
-	ret := m.ctrl.Call(m, "Get", varargs...)
+	ret := m.ctrl.Call(m, "CreateCard", varargs...)
 	ret0, _ := ret[0].(*api.Card)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
 
-// Get indicates an expected call of Get.
-func (mr *MockServicesMockRecorder) Get(ctx, in interface{}, opts ...interface{}) *gomock.Call {
+// CreateCard indicates an expected call of CreateCard.
+func (mr *MockServicesMockRecorder) CreateCard(ctx, in interface{}, opts ...interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	varargs := append([]interface{}{ctx, in}, opts...)
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Get", reflect.TypeOf((*MockServices)(nil).Get), varargs...)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "CreateCard", reflect.TypeOf((*MockServices)(nil).CreateCard), varargs...)
+}
+
+// GetAccount mocks base method.
+func (m *MockServices) GetAccount(ctx context.Context, in *api.GetAccountRequest, opts ...grpc.CallOption) (*api.Account, error) {
+	m.ctrl.T.Helper()
+	varargs := []interface{}{ctx, in}
+	for _, a := range opts {
+		varargs = append(varargs, a)
+	}
+	ret := m.ctrl.Call(m, "GetAccount", varargs...)
+	ret0, _ := ret[0].(*api.Account)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// GetAccount indicates an expected call of GetAccount.
+func (mr *MockServicesMockRecorder) GetAccount(ctx, in interface{}, opts ...interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	varargs := append([]interface{}{ctx, in}, opts...)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetAccount", reflect.TypeOf((*MockServices)(nil).GetAccount), varargs...)
+}
+
+// GetCard mocks base method.
+func (m *MockServices) GetCard(ctx context.Context, in *api.GetCardRequest, opts ...grpc.CallOption) (*api.Card, error) {
+	m.ctrl.T.Helper()
+	varargs := []interface{}{ctx, in}
+	for _, a := range opts {
+		varargs = append(varargs, a)
+	}
+	ret := m.ctrl.Call(m, "GetCard", varargs...)
+	ret0, _ := ret[0].(*api.Card)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// GetCard indicates an expected call of GetCard.
+func (mr *MockServicesMockRecorder) GetCard(ctx, in interface{}, opts ...interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	varargs := append([]interface{}{ctx, in}, opts...)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetCard", reflect.TypeOf((*MockServices)(nil).GetCard), varargs...)
+}
+
+// ListAvailableAccounts mocks base method.
+func (m *MockServices) ListAvailableAccounts(ctx context.Context, in *api.ListAvailableAccountsRequest, opts ...grpc.CallOption) (*api.ListAvailableAccountsResponse, error) {
+	m.ctrl.T.Helper()
+	varargs := []interface{}{ctx, in}
+	for _, a := range opts {
+		varargs = append(varargs, a)
+	}
+	ret := m.ctrl.Call(m, "ListAvailableAccounts", varargs...)
+	ret0, _ := ret[0].(*api.ListAvailableAccountsResponse)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// ListAvailableAccounts indicates an expected call of ListAvailableAccounts.
+func (mr *MockServicesMockRecorder) ListAvailableAccounts(ctx, in interface{}, opts ...interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	varargs := append([]interface{}{ctx, in}, opts...)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ListAvailableAccounts", reflect.TypeOf((*MockServices)(nil).ListAvailableAccounts), varargs...)
 }
 
 // ListAvailableCards mocks base method.
@@ -136,22 +196,42 @@ func (mr *MockServicesMockRecorder) Register(ctx, in interface{}, opts ...interf
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Register", reflect.TypeOf((*MockServices)(nil).Register), varargs...)
 }
 
-// Update mocks base method.
-func (m *MockServices) Update(ctx context.Context, in *api.UpdateCardRequest, opts ...grpc.CallOption) (*api.Card, error) {
+// UpdateAccount mocks base method.
+func (m *MockServices) UpdateAccount(ctx context.Context, in *api.UpdateAccountRequest, opts ...grpc.CallOption) (*api.Account, error) {
 	m.ctrl.T.Helper()
 	varargs := []interface{}{ctx, in}
 	for _, a := range opts {
 		varargs = append(varargs, a)
 	}
-	ret := m.ctrl.Call(m, "Update", varargs...)
+	ret := m.ctrl.Call(m, "UpdateAccount", varargs...)
+	ret0, _ := ret[0].(*api.Account)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// UpdateAccount indicates an expected call of UpdateAccount.
+func (mr *MockServicesMockRecorder) UpdateAccount(ctx, in interface{}, opts ...interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	varargs := append([]interface{}{ctx, in}, opts...)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "UpdateAccount", reflect.TypeOf((*MockServices)(nil).UpdateAccount), varargs...)
+}
+
+// UpdateCard mocks base method.
+func (m *MockServices) UpdateCard(ctx context.Context, in *api.UpdateCardRequest, opts ...grpc.CallOption) (*api.Card, error) {
+	m.ctrl.T.Helper()
+	varargs := []interface{}{ctx, in}
+	for _, a := range opts {
+		varargs = append(varargs, a)
+	}
+	ret := m.ctrl.Call(m, "UpdateCard", varargs...)
 	ret0, _ := ret[0].(*api.Card)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
 
-// Update indicates an expected call of Update.
-func (mr *MockServicesMockRecorder) Update(ctx, in interface{}, opts ...interface{}) *gomock.Call {
+// UpdateCard indicates an expected call of UpdateCard.
+func (mr *MockServicesMockRecorder) UpdateCard(ctx, in interface{}, opts ...interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	varargs := append([]interface{}{ctx, in}, opts...)
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Update", reflect.TypeOf((*MockServices)(nil).Update), varargs...)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "UpdateCard", reflect.TypeOf((*MockServices)(nil).UpdateCard), varargs...)
 }

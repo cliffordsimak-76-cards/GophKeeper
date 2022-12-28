@@ -111,7 +111,6 @@ func loadTLSCredentials() (credentials.TransportCredentials, error) {
 		return nil, err
 	}
 
-	// Create the credentials and return it
 	config := &tls.Config{
 		Certificates: []tls.Certificate{serverCert},
 		ClientAuth:   tls.RequireAndVerifyClientCert,

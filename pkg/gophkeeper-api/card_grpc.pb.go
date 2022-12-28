@@ -22,9 +22,9 @@ const _ = grpc.SupportPackageIsVersion7
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type CardServiceClient interface {
-	Create(ctx context.Context, in *CreateCardRequest, opts ...grpc.CallOption) (*Card, error)
-	Update(ctx context.Context, in *UpdateCardRequest, opts ...grpc.CallOption) (*Card, error)
-	Get(ctx context.Context, in *GetCardRequest, opts ...grpc.CallOption) (*Card, error)
+	CreateCard(ctx context.Context, in *CreateCardRequest, opts ...grpc.CallOption) (*Card, error)
+	UpdateCard(ctx context.Context, in *UpdateCardRequest, opts ...grpc.CallOption) (*Card, error)
+	GetCard(ctx context.Context, in *GetCardRequest, opts ...grpc.CallOption) (*Card, error)
 	ListAvailableCards(ctx context.Context, in *ListAvailableCardsRequest, opts ...grpc.CallOption) (*ListAvailableCardsResponse, error)
 }
 
@@ -36,27 +36,27 @@ func NewCardServiceClient(cc grpc.ClientConnInterface) CardServiceClient {
 	return &cardServiceClient{cc}
 }
 
-func (c *cardServiceClient) Create(ctx context.Context, in *CreateCardRequest, opts ...grpc.CallOption) (*Card, error) {
+func (c *cardServiceClient) CreateCard(ctx context.Context, in *CreateCardRequest, opts ...grpc.CallOption) (*Card, error) {
 	out := new(Card)
-	err := c.cc.Invoke(ctx, "/gophkeeper.v1.CardService/Create", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/gophkeeper.v1.CardService/CreateCard", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *cardServiceClient) Update(ctx context.Context, in *UpdateCardRequest, opts ...grpc.CallOption) (*Card, error) {
+func (c *cardServiceClient) UpdateCard(ctx context.Context, in *UpdateCardRequest, opts ...grpc.CallOption) (*Card, error) {
 	out := new(Card)
-	err := c.cc.Invoke(ctx, "/gophkeeper.v1.CardService/Update", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/gophkeeper.v1.CardService/UpdateCard", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *cardServiceClient) Get(ctx context.Context, in *GetCardRequest, opts ...grpc.CallOption) (*Card, error) {
+func (c *cardServiceClient) GetCard(ctx context.Context, in *GetCardRequest, opts ...grpc.CallOption) (*Card, error) {
 	out := new(Card)
-	err := c.cc.Invoke(ctx, "/gophkeeper.v1.CardService/Get", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/gophkeeper.v1.CardService/GetCard", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -76,9 +76,9 @@ func (c *cardServiceClient) ListAvailableCards(ctx context.Context, in *ListAvai
 // All implementations must embed UnimplementedCardServiceServer
 // for forward compatibility
 type CardServiceServer interface {
-	Create(context.Context, *CreateCardRequest) (*Card, error)
-	Update(context.Context, *UpdateCardRequest) (*Card, error)
-	Get(context.Context, *GetCardRequest) (*Card, error)
+	CreateCard(context.Context, *CreateCardRequest) (*Card, error)
+	UpdateCard(context.Context, *UpdateCardRequest) (*Card, error)
+	GetCard(context.Context, *GetCardRequest) (*Card, error)
 	ListAvailableCards(context.Context, *ListAvailableCardsRequest) (*ListAvailableCardsResponse, error)
 	mustEmbedUnimplementedCardServiceServer()
 }
@@ -87,14 +87,14 @@ type CardServiceServer interface {
 type UnimplementedCardServiceServer struct {
 }
 
-func (UnimplementedCardServiceServer) Create(context.Context, *CreateCardRequest) (*Card, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method Create not implemented")
+func (UnimplementedCardServiceServer) CreateCard(context.Context, *CreateCardRequest) (*Card, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CreateCard not implemented")
 }
-func (UnimplementedCardServiceServer) Update(context.Context, *UpdateCardRequest) (*Card, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method Update not implemented")
+func (UnimplementedCardServiceServer) UpdateCard(context.Context, *UpdateCardRequest) (*Card, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UpdateCard not implemented")
 }
-func (UnimplementedCardServiceServer) Get(context.Context, *GetCardRequest) (*Card, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method Get not implemented")
+func (UnimplementedCardServiceServer) GetCard(context.Context, *GetCardRequest) (*Card, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetCard not implemented")
 }
 func (UnimplementedCardServiceServer) ListAvailableCards(context.Context, *ListAvailableCardsRequest) (*ListAvailableCardsResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListAvailableCards not implemented")
@@ -112,56 +112,56 @@ func RegisterCardServiceServer(s grpc.ServiceRegistrar, srv CardServiceServer) {
 	s.RegisterService(&CardService_ServiceDesc, srv)
 }
 
-func _CardService_Create_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _CardService_CreateCard_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(CreateCardRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(CardServiceServer).Create(ctx, in)
+		return srv.(CardServiceServer).CreateCard(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/gophkeeper.v1.CardService/Create",
+		FullMethod: "/gophkeeper.v1.CardService/CreateCard",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(CardServiceServer).Create(ctx, req.(*CreateCardRequest))
+		return srv.(CardServiceServer).CreateCard(ctx, req.(*CreateCardRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _CardService_Update_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _CardService_UpdateCard_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(UpdateCardRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(CardServiceServer).Update(ctx, in)
+		return srv.(CardServiceServer).UpdateCard(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/gophkeeper.v1.CardService/Update",
+		FullMethod: "/gophkeeper.v1.CardService/UpdateCard",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(CardServiceServer).Update(ctx, req.(*UpdateCardRequest))
+		return srv.(CardServiceServer).UpdateCard(ctx, req.(*UpdateCardRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _CardService_Get_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _CardService_GetCard_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(GetCardRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(CardServiceServer).Get(ctx, in)
+		return srv.(CardServiceServer).GetCard(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/gophkeeper.v1.CardService/Get",
+		FullMethod: "/gophkeeper.v1.CardService/GetCard",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(CardServiceServer).Get(ctx, req.(*GetCardRequest))
+		return srv.(CardServiceServer).GetCard(ctx, req.(*GetCardRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -192,16 +192,16 @@ var CardService_ServiceDesc = grpc.ServiceDesc{
 	HandlerType: (*CardServiceServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
-			MethodName: "Create",
-			Handler:    _CardService_Create_Handler,
+			MethodName: "CreateCard",
+			Handler:    _CardService_CreateCard_Handler,
 		},
 		{
-			MethodName: "Update",
-			Handler:    _CardService_Update_Handler,
+			MethodName: "UpdateCard",
+			Handler:    _CardService_UpdateCard_Handler,
 		},
 		{
-			MethodName: "Get",
-			Handler:    _CardService_Get_Handler,
+			MethodName: "GetCard",
+			Handler:    _CardService_GetCard_Handler,
 		},
 		{
 			MethodName: "ListAvailableCards",

@@ -18,7 +18,7 @@ func Test_Get(t *testing.T) {
 
 		req := &api.GetAccountRequest{}
 
-		_, err := te.service.Get(te.ctx, req)
+		_, err := te.service.GetAccount(te.ctx, req)
 		require.Error(t, err)
 		require.Equal(t, codes.InvalidArgument, status.Code(err))
 	})
@@ -33,7 +33,7 @@ func Test_Get(t *testing.T) {
 		te.accountRepoMock.EXPECT().Get(te.ctx, req.GetId()).
 			Return(nil, errAny)
 
-		_, err := te.service.Get(te.ctx, req)
+		_, err := te.service.GetAccount(te.ctx, req)
 		require.Error(t, err)
 		require.Equal(t, codes.Internal, status.Code(err))
 	})
@@ -48,7 +48,7 @@ func Test_Get(t *testing.T) {
 		te.accountRepoMock.EXPECT().Get(te.ctx, req.GetId()).
 			Return(nil, repository.ErrEntityNotFound)
 
-		_, err := te.service.Get(te.ctx, req)
+		_, err := te.service.GetAccount(te.ctx, req)
 		require.Error(t, err)
 		require.Equal(t, codes.NotFound, status.Code(err))
 	})
@@ -64,7 +64,7 @@ func Test_Get(t *testing.T) {
 		te.accountRepoMock.EXPECT().Get(te.ctx, req.GetId()).
 			Return(account, nil)
 
-		response, err := te.service.Get(te.ctx, req)
+		response, err := te.service.GetAccount(te.ctx, req)
 		require.NoError(t, err)
 		require.Equal(t, adapters.AccountToPb(account), response)
 	})

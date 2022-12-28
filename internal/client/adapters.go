@@ -28,6 +28,7 @@ func buildCreateCardRequest(card *Card) *api.CreateCardRequest {
 
 func buildUpdateCardRequest(card *Card) *api.UpdateCardRequest {
 	return &api.UpdateCardRequest{
+		Id:     card.ID,
 		Name:   card.Name,
 		Number: card.Number,
 		Expire: card.Expire,
@@ -48,10 +49,47 @@ func buildGetCardRequest(id string) *api.GetCardRequest {
 
 func pbCardToCard(card *api.Card) *Card {
 	return &Card{
+		ID:     card.Id,
 		Name:   card.Name,
 		Number: card.Number,
 		Expire: card.Expire,
 		CVC:    card.Cvc,
 		Holder: card.Holder,
+	}
+}
+
+func buildCreateAccountRequest(account *Account) *api.CreateAccountRequest {
+	return &api.CreateAccountRequest{
+		Name:     account.Name,
+		Login:    account.Login,
+		Password: account.Password,
+	}
+}
+
+func buildUpdateAccountRequest(account *Account) *api.UpdateAccountRequest {
+	return &api.UpdateAccountRequest{
+		Id:       account.ID,
+		Name:     account.Name,
+		Login:    account.Login,
+		Password: account.Password,
+	}
+}
+
+func buildListAvailableAccountsRequest() *api.ListAvailableAccountsRequest {
+	return &api.ListAvailableAccountsRequest{}
+}
+
+func buildGetAccountRequest(id string) *api.GetAccountRequest {
+	return &api.GetAccountRequest{
+		Id: id,
+	}
+}
+
+func pbAccountToAccount(account *api.Account) *Account {
+	return &Account{
+		ID:       account.Id,
+		Name:     account.Name,
+		Login:    account.Login,
+		Password: account.Password,
 	}
 }

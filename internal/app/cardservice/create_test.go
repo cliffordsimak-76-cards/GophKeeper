@@ -17,7 +17,7 @@ func Test_Create(t *testing.T) {
 
 		req := &api.CreateCardRequest{}
 
-		_, err := te.service.Create(te.ctx, req)
+		_, err := te.service.CreateCard(te.ctx, req)
 		require.Error(t, err)
 		require.Equal(t, codes.InvalidArgument, status.Code(err))
 	})
@@ -36,7 +36,7 @@ func Test_Create(t *testing.T) {
 		te.authMock.EXPECT().GetUserIdFromContext(te.ctx).
 			Return("", errAny)
 
-		_, err := te.service.Create(te.ctx, req)
+		_, err := te.service.CreateCard(te.ctx, req)
 		require.Error(t, err)
 		require.Equal(t, codes.Internal, status.Code(err))
 	})
@@ -60,7 +60,7 @@ func Test_Create(t *testing.T) {
 		te.cardRepoMock.EXPECT().Create(te.ctx, card).
 			Return(nil, errAny)
 
-		_, err := te.service.Create(te.ctx, req)
+		_, err := te.service.CreateCard(te.ctx, req)
 		require.Error(t, err)
 		require.Equal(t, codes.Internal, status.Code(err))
 	})
@@ -84,7 +84,7 @@ func Test_Create(t *testing.T) {
 		te.cardRepoMock.EXPECT().Create(te.ctx, adapters.CreateCardRequestFromPb(req, userID)).
 			Return(card, nil)
 
-		response, err := te.service.Create(te.ctx, req)
+		response, err := te.service.CreateCard(te.ctx, req)
 		require.NoError(t, err)
 		require.Equal(t, adapters.CardToPb(card), response)
 	})

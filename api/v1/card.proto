@@ -5,11 +5,11 @@ package gophkeeper.v1;
 option go_package = "github.com/cliffordsimak-76-cards/gophkeeper/pkg/gophkeeper-api/v1;api";
 
 service CardService {
-  rpc Create(CreateCardRequest) returns (Card) {}
+  rpc CreateCard(CreateCardRequest) returns (Card) {}
 
-  rpc Update(UpdateCardRequest) returns (Card) {}
+  rpc UpdateCard(UpdateCardRequest) returns (Card) {}
 
-  rpc Get(GetCardRequest) returns (Card) {}
+  rpc GetCard(GetCardRequest) returns (Card) {}
 
   rpc ListAvailableCards(ListAvailableCardsRequest) returns (ListAvailableCardsResponse) {}
 }

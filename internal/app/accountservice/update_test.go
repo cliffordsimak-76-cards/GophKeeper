@@ -17,7 +17,7 @@ func Test_Update(t *testing.T) {
 
 		req := &api.UpdateAccountRequest{}
 
-		_, err := te.service.Update(te.ctx, req)
+		_, err := te.service.UpdateAccount(te.ctx, req)
 		require.Error(t, err)
 		require.Equal(t, codes.InvalidArgument, status.Code(err))
 	})
@@ -35,7 +35,7 @@ func Test_Update(t *testing.T) {
 		te.authMock.EXPECT().GetUserIdFromContext(te.ctx).
 			Return("", errAny)
 
-		_, err := te.service.Update(te.ctx, req)
+		_, err := te.service.UpdateAccount(te.ctx, req)
 		require.Error(t, err)
 		require.Equal(t, codes.Internal, status.Code(err))
 	})
@@ -58,7 +58,7 @@ func Test_Update(t *testing.T) {
 		te.accountRepoMock.EXPECT().Update(te.ctx, account).
 			Return(nil, errAny)
 
-		_, err := te.service.Update(te.ctx, req)
+		_, err := te.service.UpdateAccount(te.ctx, req)
 		require.Error(t, err)
 		require.Equal(t, codes.Internal, status.Code(err))
 	})
@@ -81,7 +81,7 @@ func Test_Update(t *testing.T) {
 		te.accountRepoMock.EXPECT().Update(te.ctx, adapters.UpdateAccountRequestFromPb(req, userID)).
 			Return(account, nil)
 
-		response, err := te.service.Update(te.ctx, req)
+		response, err := te.service.UpdateAccount(te.ctx, req)
 		require.NoError(t, err)
 		require.Equal(t, adapters.AccountToPb(account), response)
 	})

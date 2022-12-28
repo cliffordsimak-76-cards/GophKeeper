@@ -29,6 +29,22 @@ create table if not exists cards
         foreign key (user_id) references users
 );
 
+create table if not exists accounts
+(
+    id          text default uuid_generate_v4() not null,
+    name        text,
+    user_id     text,
+    login      text,
+    password      text,
+    created_at  timestamp with time zone,
+    updated_at  timestamp with time zone,
+    constraint accounts_pkey
+        primary key (id),
+    constraint accounts_users_id_fkey
+        foreign key (user_id) references users
+);
+
 -- +migrate Down
+drop table if exists accounts;
 drop table if exists cards;
 drop table if exists users;

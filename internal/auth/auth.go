@@ -52,7 +52,7 @@ func getTokenFromContext(ctx context.Context) (string, error) {
 
 	values := md["authorization"]
 	if len(values) == 0 {
-		return "", status.Errorf(codes.Unauthenticated, "userID claim is not provided")
+		return "", status.Errorf(codes.Unauthenticated, "authorization token is not provided")
 	}
 
 	return values[0], nil

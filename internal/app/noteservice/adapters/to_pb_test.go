@@ -8,46 +8,40 @@ import (
 	"github.com/stretchr/testify/require"
 )
 
-func Test_CardToPb(t *testing.T) {
+func Test_NoteToPb(t *testing.T) {
 	t.Run("empty", func(t *testing.T) {
-		data := &model.Card{}
-		mapedData := CardToPb(data)
-		expectedData := &api.Card{}
+		data := &model.Note{}
+		mapedData := NoteToPb(data)
+		expectedData := &api.Note{}
 		require.Equal(t, expectedData, mapedData)
 	})
 	t.Run("all data filler", func(t *testing.T) {
-		data := &model.Card{
-			ID:     "id",
-			Name:   "name",
-			Number: "number",
-			Holder: "holder",
-			Expire: "expire",
-			CVC:    "cvc",
+		data := &model.Note{
+			ID:   "id",
+			Name: "name",
+			Text: "text",
 		}
-		mapedData := CardToPb(data)
-		expectedData := &api.Card{
-			Id:     "id",
-			Name:   "name",
-			Number: "number",
-			Holder: "holder",
-			Expire: "expire",
-			Cvc:    "cvc",
+		mapedData := NoteToPb(data)
+		expectedData := &api.Note{
+			Id:   "id",
+			Name: "name",
+			Text: "text",
 		}
 		require.Equal(t, expectedData, mapedData)
 	})
 }
 
-func Test_ListAvailableCardsToPb(t *testing.T) {
+func Test_ListAvailableNotesToPb(t *testing.T) {
 	t.Run("empty", func(t *testing.T) {
-		data := []*model.Card{}
-		mapedData := ListAvailableCardsToPb(data)
-		expectedData := &api.ListAvailableCardsResponse{
-			Cards: make([]*api.AvailableCard, 0),
+		data := []*model.Note{}
+		mapedData := ListAvailableNotesToPb(data)
+		expectedData := &api.ListAvailableNotesResponse{
+			Notes: make([]*api.AvailableNote, 0),
 		}
 		require.Equal(t, expectedData, mapedData)
 	})
 	t.Run("all data filler", func(t *testing.T) {
-		data := []*model.Card{
+		data := []*model.Note{
 			{
 				ID:   "id-1",
 				Name: "name-1",
@@ -57,9 +51,9 @@ func Test_ListAvailableCardsToPb(t *testing.T) {
 				Name: "name-2",
 			},
 		}
-		mapedData := ListAvailableCardsToPb(data)
-		expectedData := &api.ListAvailableCardsResponse{
-			Cards: []*api.AvailableCard{
+		mapedData := ListAvailableNotesToPb(data)
+		expectedData := &api.ListAvailableNotesResponse{
+			Notes: []*api.AvailableNote{
 				{
 					Id:   "id-1",
 					Name: "name-1",
@@ -74,20 +68,20 @@ func Test_ListAvailableCardsToPb(t *testing.T) {
 	})
 }
 
-func Test_AvailableCardToPb(t *testing.T) {
+func Test_AvailableNoteToPb(t *testing.T) {
 	t.Run("empty", func(t *testing.T) {
-		data := &model.Card{}
-		mapedData := AvailableCardToPb(data)
-		expectedData := &api.AvailableCard{}
+		data := &model.Note{}
+		mapedData := AvailableNoteToPb(data)
+		expectedData := &api.AvailableNote{}
 		require.Equal(t, expectedData, mapedData)
 	})
 	t.Run("all data filler", func(t *testing.T) {
-		data := &model.Card{
+		data := &model.Note{
 			ID:   "id",
 			Name: "name",
 		}
-		mapedData := AvailableCardToPb(data)
-		expectedData := &api.AvailableCard{
+		mapedData := AvailableNoteToPb(data)
+		expectedData := &api.AvailableNote{
 			Id:   "id",
 			Name: "name",
 		}

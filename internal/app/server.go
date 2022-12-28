@@ -12,6 +12,7 @@ import (
 	"github.com/cliffordsimak-76-cards/gophkeeper/internal/app/accountservice"
 	"github.com/cliffordsimak-76-cards/gophkeeper/internal/app/authservice"
 	"github.com/cliffordsimak-76-cards/gophkeeper/internal/app/cardservice"
+	"github.com/cliffordsimak-76-cards/gophkeeper/internal/app/noteservice"
 	"github.com/cliffordsimak-76-cards/gophkeeper/internal/auth"
 	"github.com/cliffordsimak-76-cards/gophkeeper/internal/config"
 	"github.com/cliffordsimak-76-cards/gophkeeper/internal/crypto"
@@ -32,24 +33,31 @@ func Run(ctx context.Context, cfg *config.Config) error {
 	env := initEnv(ctx, cfg)
 
 	interceptor := auth.NewAuthInterceptor(env.jwt)
-	tlsCredentials, err := loadTLSCredentials()
-	if err != nil {
-		return fmt.Errorf("cannot load TLS credentials: %w", err)
-	}
 	serverOptions := []grpc.ServerOption{
 		grpc.UnaryInterceptor(interceptor.Unary()),
 		grpc.StreamInterceptor(interceptor.Stream()),
-		grpc.Creds(tlsCredentials),
 	}
+
+	if cfg.EnableTLS {
+		tlsCredentials, err := loadTLSCredentials()
+		if err != nil {
+			return fmt.Errorf("cannot load TLS credentials: %w", err)
+		}
+
+		serverOptions = append(serverOptions, grpc.Creds(tlsCredentials))
+	}
+
 	s := grpc.NewServer(serverOptions...)
 
 	authService := authservice.NewService(env.repoGroup, env.jwt, env.crypto)
+	cardService := cardservice.NewService(env.repoGroup, env.auth, env.crypto)
 	accountService := accountservice.NewService(env.repoGroup, env.auth)
-	cardService := cardservice.NewService(env.repoGroup, env.auth)
+	noteService := noteservice.NewService(env.repoGroup, env.auth)
 
 	api.RegisterAuthServiceServer(s, authService)
 	api.RegisterAccountServiceServer(s, accountService)
 	api.RegisterCardServiceServer(s, cardService)
+	api.RegisterNoteServiceServer(s, noteService)
 
 	listener, err := net.Listen("tcp", cfg.GRPCAddr)
 	if err != nil {

@@ -13,6 +13,7 @@ import (
 	api "github.com/cliffordsimak-76-cards/gophkeeper/pkg/gophkeeper-api"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials"
+	"google.golang.org/grpc/credentials/insecure"
 )
 
 const (
@@ -25,27 +26,35 @@ type Services interface {
 	api.AuthServiceClient
 	api.CardServiceClient
 	api.AccountServiceClient
+	api.NoteServiceClient
 }
 
 type Client struct {
 	AuthClient    api.AuthServiceClient
 	CardClient    api.CardServiceClient
 	AccountClient api.AccountServiceClient
+	NoteClient    api.NoteServiceClient
 }
 
 func NewClient(cfg *Config) (*Client, error) {
 	ctx, cancel := context.WithTimeout(context.Background(), cfg.ServerTimeout)
 	defer cancel()
 
-	tlsCredentials, err := loadTLSCredentials()
-	if err != nil {
-		log.Fatal("cannot load TLS credentials: ", err)
+	transportOption := grpc.WithTransportCredentials(insecure.NewCredentials())
+
+	if cfg.EnableTLS {
+		tlsCredentials, err := loadTLSCredentials()
+		if err != nil {
+			log.Fatal("cannot load TLS credentials: ", err)
+		}
+
+		transportOption = grpc.WithTransportCredentials(tlsCredentials)
 	}
 
 	conn, err := grpc.DialContext(
 		ctx,
 		cfg.ServerHost,
-		grpc.WithTransportCredentials(tlsCredentials),
+		transportOption,
 	)
 	if err != nil {
 		return nil, err
@@ -55,6 +64,7 @@ func NewClient(cfg *Config) (*Client, error) {
 		AuthClient:    api.NewAuthServiceClient(conn),
 		CardClient:    api.NewCardServiceClient(conn),
 		AccountClient: api.NewAccountServiceClient(conn),
+		NoteClient:    api.NewNoteServiceClient(conn),
 	}, nil
 }
 

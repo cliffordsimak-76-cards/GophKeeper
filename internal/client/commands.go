@@ -13,6 +13,10 @@ const (
 	CreateAccount string = "Create account"
 	GetAccount    string = "Get account"
 	UpdateAccount string = "Update account"
+
+	CreateNote string = "Create note"
+	GetNote    string = "Get note"
+	UpdateNote string = "Update note"
 )
 
 type CommandRunner struct {
@@ -51,6 +55,12 @@ func (r *CommandRunner) run(
 		return r.getAccount(ctx)
 	case UpdateAccount:
 		return r.updateAccount(ctx)
+	case CreateNote:
+		return r.createNote(ctx)
+	case GetNote:
+		return r.getNote(ctx)
+	case UpdateNote:
+		return r.updateNote(ctx)
 	}
 
 	return nil

@@ -7,6 +7,7 @@ import (
 
 func AccountToPb(account *model.Account) *api.Account {
 	return &api.Account{
+		Id:       account.ID,
 		Name:     account.Name,
 		Login:    account.Login,
 		Password: account.Password,

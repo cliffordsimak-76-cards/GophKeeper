@@ -93,3 +93,36 @@ func pbAccountToAccount(account *api.Account) *Account {
 		Password: account.Password,
 	}
 }
+
+func buildCreateNoteRequest(note *Note) *api.CreateNoteRequest {
+	return &api.CreateNoteRequest{
+		Name: note.Name,
+		Text: note.Text,
+	}
+}
+
+func buildUpdateNoteRequest(note *Note) *api.UpdateNoteRequest {
+	return &api.UpdateNoteRequest{
+		Id:   note.ID,
+		Name: note.Name,
+		Text: note.Text,
+	}
+}
+
+func buildListAvailableNotesRequest() *api.ListAvailableNotesRequest {
+	return &api.ListAvailableNotesRequest{}
+}
+
+func buildGetNoteRequest(id string) *api.GetNoteRequest {
+	return &api.GetNoteRequest{
+		Id: id,
+	}
+}
+
+func pbNoteToNote(note *api.Note) *Note {
+	return &Note{
+		ID:   note.Id,
+		Name: note.Name,
+		Text: note.Text,
+	}
+}

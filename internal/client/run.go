@@ -28,6 +28,13 @@ func Run(ctx context.Context, cfg *Config) error {
 			[]string{
 				CreateCard,
 				GetCard,
+				UpdateCard,
+				CreateAccount,
+				GetAccount,
+				UpdateAccount,
+				CreateNote,
+				GetNote,
+				UpdateNote,
 			},
 		)
 		err = runner.run(ctx, cmd)

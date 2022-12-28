@@ -88,15 +88,15 @@ func (r *CommandRunner) updateAccount(ctx context.Context) error {
 	}
 
 	newAccount := pbAccountToAccount(account)
-	name := getInput(fmt.Sprintf("name [%s]:", account.Name), notEmpty)
+	name := getInput(fmt.Sprintf("name [%s]:", account.Name), any)
 	if name != "" {
 		newAccount.Name = name
 	}
-	login := getInput(fmt.Sprintf("login [%s]:", account.Login), notEmpty)
+	login := getInput(fmt.Sprintf("login [%s]:", account.Login), any)
 	if login != "" {
 		newAccount.Login = login
 	}
-	password := getInput(fmt.Sprintf("password [%s]:", account.Password), notEmpty)
+	password := getInput(fmt.Sprintf("password [%s]:", account.Password), any)
 	if password != "" {
 		newAccount.Password = password
 	}

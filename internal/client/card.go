@@ -92,23 +92,23 @@ func (r *CommandRunner) updateCard(ctx context.Context) error {
 	}
 
 	newCard := pbCardToCard(card)
-	name := getInput(fmt.Sprintf("name [%s]:", card.Name), notEmpty)
+	name := getInput(fmt.Sprintf("name [%s]:", card.Name), any)
 	if name != "" {
 		newCard.Name = name
 	}
-	number := getInput(fmt.Sprintf("number [%s]:", card.Number), notEmpty)
+	number := getInput(fmt.Sprintf("number [%s]:", card.Number), any)
 	if number != "" {
 		newCard.Number = number
 	}
-	expire := getInput(fmt.Sprintf("expire [%s]:", card.Expire), notEmpty)
+	expire := getInput(fmt.Sprintf("expire [%s]:", card.Expire), any)
 	if expire != "" {
 		newCard.Expire = expire
 	}
-	cvc := getInput(fmt.Sprintf("cvc [%s]:", card.Cvc), notEmpty)
+	cvc := getInput(fmt.Sprintf("cvc [%s]:", card.Cvc), any)
 	if cvc != "" {
 		newCard.CVC = cvc
 	}
-	holder := getInput(fmt.Sprintf("holder [%s]:", card.Holder), notEmpty)
+	holder := getInput(fmt.Sprintf("holder [%s]:", card.Holder), any)
 	if holder != "" {
 		newCard.Holder = holder
 	}

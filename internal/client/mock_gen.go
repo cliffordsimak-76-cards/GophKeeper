@@ -76,6 +76,26 @@ func (mr *MockServicesMockRecorder) CreateCard(ctx, in interface{}, opts ...inte
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "CreateCard", reflect.TypeOf((*MockServices)(nil).CreateCard), varargs...)
 }
 
+// CreateNote mocks base method.
+func (m *MockServices) CreateNote(ctx context.Context, in *api.CreateNoteRequest, opts ...grpc.CallOption) (*api.Note, error) {
+	m.ctrl.T.Helper()
+	varargs := []interface{}{ctx, in}
+	for _, a := range opts {
+		varargs = append(varargs, a)
+	}
+	ret := m.ctrl.Call(m, "CreateNote", varargs...)
+	ret0, _ := ret[0].(*api.Note)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// CreateNote indicates an expected call of CreateNote.
+func (mr *MockServicesMockRecorder) CreateNote(ctx, in interface{}, opts ...interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	varargs := append([]interface{}{ctx, in}, opts...)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "CreateNote", reflect.TypeOf((*MockServices)(nil).CreateNote), varargs...)
+}
+
 // GetAccount mocks base method.
 func (m *MockServices) GetAccount(ctx context.Context, in *api.GetAccountRequest, opts ...grpc.CallOption) (*api.Account, error) {
 	m.ctrl.T.Helper()
@@ -116,6 +136,26 @@ func (mr *MockServicesMockRecorder) GetCard(ctx, in interface{}, opts ...interfa
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetCard", reflect.TypeOf((*MockServices)(nil).GetCard), varargs...)
 }
 
+// GetNote mocks base method.
+func (m *MockServices) GetNote(ctx context.Context, in *api.GetNoteRequest, opts ...grpc.CallOption) (*api.Note, error) {
+	m.ctrl.T.Helper()
+	varargs := []interface{}{ctx, in}
+	for _, a := range opts {
+		varargs = append(varargs, a)
+	}
+	ret := m.ctrl.Call(m, "GetNote", varargs...)
+	ret0, _ := ret[0].(*api.Note)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// GetNote indicates an expected call of GetNote.
+func (mr *MockServicesMockRecorder) GetNote(ctx, in interface{}, opts ...interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	varargs := append([]interface{}{ctx, in}, opts...)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetNote", reflect.TypeOf((*MockServices)(nil).GetNote), varargs...)
+}
+
 // ListAvailableAccounts mocks base method.
 func (m *MockServices) ListAvailableAccounts(ctx context.Context, in *api.ListAvailableAccountsRequest, opts ...grpc.CallOption) (*api.ListAvailableAccountsResponse, error) {
 	m.ctrl.T.Helper()
@@ -154,6 +194,26 @@ func (mr *MockServicesMockRecorder) ListAvailableCards(ctx, in interface{}, opts
 	mr.mock.ctrl.T.Helper()
 	varargs := append([]interface{}{ctx, in}, opts...)
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ListAvailableCards", reflect.TypeOf((*MockServices)(nil).ListAvailableCards), varargs...)
+}
+
+// ListAvailableNotes mocks base method.
+func (m *MockServices) ListAvailableNotes(ctx context.Context, in *api.ListAvailableNotesRequest, opts ...grpc.CallOption) (*api.ListAvailableNotesResponse, error) {
+	m.ctrl.T.Helper()
+	varargs := []interface{}{ctx, in}
+	for _, a := range opts {
+		varargs = append(varargs, a)
+	}
+	ret := m.ctrl.Call(m, "ListAvailableNotes", varargs...)
+	ret0, _ := ret[0].(*api.ListAvailableNotesResponse)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// ListAvailableNotes indicates an expected call of ListAvailableNotes.
+func (mr *MockServicesMockRecorder) ListAvailableNotes(ctx, in interface{}, opts ...interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	varargs := append([]interface{}{ctx, in}, opts...)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ListAvailableNotes", reflect.TypeOf((*MockServices)(nil).ListAvailableNotes), varargs...)
 }
 
 // Login mocks base method.
@@ -234,4 +294,24 @@ func (mr *MockServicesMockRecorder) UpdateCard(ctx, in interface{}, opts ...inte
 	mr.mock.ctrl.T.Helper()
 	varargs := append([]interface{}{ctx, in}, opts...)
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "UpdateCard", reflect.TypeOf((*MockServices)(nil).UpdateCard), varargs...)
+}
+
+// UpdateNote mocks base method.
+func (m *MockServices) UpdateNote(ctx context.Context, in *api.UpdateNoteRequest, opts ...grpc.CallOption) (*api.Note, error) {
+	m.ctrl.T.Helper()
+	varargs := []interface{}{ctx, in}
+	for _, a := range opts {
+		varargs = append(varargs, a)
+	}
+	ret := m.ctrl.Call(m, "UpdateNote", varargs...)
+	ret0, _ := ret[0].(*api.Note)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// UpdateNote indicates an expected call of UpdateNote.
+func (mr *MockServicesMockRecorder) UpdateNote(ctx, in interface{}, opts ...interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	varargs := append([]interface{}{ctx, in}, opts...)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "UpdateNote", reflect.TypeOf((*MockServices)(nil).UpdateNote), varargs...)
 }

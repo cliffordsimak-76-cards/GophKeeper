@@ -10,24 +10,25 @@ import (
 )
 
 type Group struct {
-	AccountRepository AccountRepository
-	CardRepository    CardRepository
 	UserRepository    UserRepository
+	CardRepository    CardRepository
+	AccountRepository AccountRepository
+	NoteRepository    NoteRepository
 }
 
 func NewGroup(client db.Client) *Group {
 	return &Group{
-		AccountRepository: NewAccountRepositoryImpl(client),
-		CardRepository:    NewCardRepositoryImpl(client),
 		UserRepository:    NewUserRepositoryImpl(client),
+		CardRepository:    NewCardRepositoryImpl(client),
+		AccountRepository: NewAccountRepositoryImpl(client),
+		NoteRepository:    NewNoteRepositoryImpl(client),
 	}
 }
 
-type AccountRepository interface {
-	Create(context.Context, *model.Account) (*model.Account, error)
-	Update(context.Context, *model.Account) (*model.Account, error)
-	Get(context.Context, string) (*model.Account, error)
-	List(context.Context, *AccountListFilter) ([]*model.Account, error)
+type UserRepository interface {
+	Create(context.Context, *model.User) (*model.User, error)
+	Update(context.Context, *model.User) error
+	Get(context.Context, string) (*model.User, error)
 }
 
 type CardRepository interface {
@@ -37,8 +38,16 @@ type CardRepository interface {
 	List(context.Context, *CardListFilter) ([]*model.Card, error)
 }
 
-type UserRepository interface {
-	Create(context.Context, *model.User) (*model.User, error)
-	Update(context.Context, *model.User) error
-	Get(context.Context, string) (*model.User, error)
+type AccountRepository interface {
+	Create(context.Context, *model.Account) (*model.Account, error)
+	Update(context.Context, *model.Account) (*model.Account, error)
+	Get(context.Context, string) (*model.Account, error)
+	List(context.Context, *AccountListFilter) ([]*model.Account, error)
+}
+
+type NoteRepository interface {
+	Create(context.Context, *model.Note) (*model.Note, error)
+	Update(context.Context, *model.Note) (*model.Note, error)
+	Get(context.Context, string) (*model.Note, error)
+	List(context.Context, *NoteListFilter) ([]*model.Note, error)
 }

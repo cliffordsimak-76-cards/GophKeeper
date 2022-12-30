@@ -30,7 +30,7 @@ func Test_Create(t *testing.T) {
 			Text: "text",
 		}
 
-		te.authMock.EXPECT().GetUserIdFromContext(te.ctx).
+		te.authMock.EXPECT().ExtractUserIdFromContext(te.ctx).
 			Return("", errAny)
 
 		_, err := te.service.CreateNote(te.ctx, req)
@@ -47,7 +47,7 @@ func Test_Create(t *testing.T) {
 		}
 
 		userID := "user-id"
-		te.authMock.EXPECT().GetUserIdFromContext(te.ctx).
+		te.authMock.EXPECT().ExtractUserIdFromContext(te.ctx).
 			Return(userID, nil)
 
 		note := adapters.CreateNoteRequestFromPb(req, userID)
@@ -68,7 +68,7 @@ func Test_Create(t *testing.T) {
 		}
 
 		userID := "user-id"
-		te.authMock.EXPECT().GetUserIdFromContext(te.ctx).
+		te.authMock.EXPECT().ExtractUserIdFromContext(te.ctx).
 			Return(userID, nil)
 
 		note := &model.Note{ID: "id"}

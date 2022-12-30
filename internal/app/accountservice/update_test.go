@@ -32,7 +32,7 @@ func Test_Update(t *testing.T) {
 			Password: "password",
 		}
 
-		te.authMock.EXPECT().GetUserIdFromContext(te.ctx).
+		te.authMock.EXPECT().ExtractUserIdFromContext(te.ctx).
 			Return("", errAny)
 
 		_, err := te.service.UpdateAccount(te.ctx, req)
@@ -51,7 +51,7 @@ func Test_Update(t *testing.T) {
 		}
 
 		userID := "user-id"
-		te.authMock.EXPECT().GetUserIdFromContext(te.ctx).
+		te.authMock.EXPECT().ExtractUserIdFromContext(te.ctx).
 			Return(userID, nil)
 
 		account := adapters.UpdateAccountRequestFromPb(req, userID)
@@ -74,7 +74,7 @@ func Test_Update(t *testing.T) {
 		}
 
 		userID := "user-id"
-		te.authMock.EXPECT().GetUserIdFromContext(te.ctx).
+		te.authMock.EXPECT().ExtractUserIdFromContext(te.ctx).
 			Return(userID, nil)
 
 		account := &model.Account{ID: "id"}

@@ -17,7 +17,7 @@ func Test_ListAvailableNotes(t *testing.T) {
 
 		req := &api.ListAvailableNotesRequest{}
 
-		te.authMock.EXPECT().GetUserIdFromContext(te.ctx).
+		te.authMock.EXPECT().ExtractUserIdFromContext(te.ctx).
 			Return("", errAny)
 
 		_, err := te.service.ListAvailableNotes(te.ctx, req)
@@ -31,7 +31,7 @@ func Test_ListAvailableNotes(t *testing.T) {
 		req := &api.ListAvailableNotesRequest{}
 
 		userID := "user-id"
-		te.authMock.EXPECT().GetUserIdFromContext(te.ctx).
+		te.authMock.EXPECT().ExtractUserIdFromContext(te.ctx).
 			Return(userID, nil)
 
 		filter := adapters.NoteListFilterFromPb(req, userID)
@@ -49,7 +49,7 @@ func Test_ListAvailableNotes(t *testing.T) {
 		req := &api.ListAvailableNotesRequest{}
 
 		userID := "user-id"
-		te.authMock.EXPECT().GetUserIdFromContext(te.ctx).
+		te.authMock.EXPECT().ExtractUserIdFromContext(te.ctx).
 			Return(userID, nil)
 
 		filter := adapters.NoteListFilterFromPb(req, userID)

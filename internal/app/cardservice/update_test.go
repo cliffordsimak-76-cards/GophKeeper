@@ -33,7 +33,7 @@ func Test_Update(t *testing.T) {
 			Cvc:    "cvc",
 		}
 
-		te.authMock.EXPECT().GetUserIdFromContext(te.ctx).
+		te.authMock.EXPECT().ExtractUserIdFromContext(te.ctx).
 			Return("", errAny)
 
 		_, err := te.service.Update(te.ctx, req)
@@ -53,7 +53,7 @@ func Test_Update(t *testing.T) {
 		}
 
 		userID := "user-id"
-		te.authMock.EXPECT().GetUserIdFromContext(te.ctx).
+		te.authMock.EXPECT().ExtractUserIdFromContext(te.ctx).
 			Return(userID, nil)
 
 		card := adapters.UpdateCardRequestFromPb(req, userID)
@@ -77,7 +77,7 @@ func Test_Update(t *testing.T) {
 		}
 
 		userID := "user-id"
-		te.authMock.EXPECT().GetUserIdFromContext(te.ctx).
+		te.authMock.EXPECT().ExtractUserIdFromContext(te.ctx).
 			Return(userID, nil)
 
 		card := &model.Card{ID: "id"}

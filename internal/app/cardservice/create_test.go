@@ -33,7 +33,7 @@ func Test_Create(t *testing.T) {
 			Cvc:    "cvc",
 		}
 
-		te.authMock.EXPECT().GetUserIdFromContext(te.ctx).
+		te.authMock.EXPECT().ExtractUserIdFromContext(te.ctx).
 			Return("", errAny)
 
 		_, err := te.service.CreateCard(te.ctx, req)
@@ -53,7 +53,7 @@ func Test_Create(t *testing.T) {
 		}
 
 		userID := "user-id"
-		te.authMock.EXPECT().GetUserIdFromContext(te.ctx).
+		te.authMock.EXPECT().ExtractUserIdFromContext(te.ctx).
 			Return(userID, nil)
 
 		card := adapters.CreateCardRequestFromPb(req, userID)
@@ -77,7 +77,7 @@ func Test_Create(t *testing.T) {
 		}
 
 		userID := "user-id"
-		te.authMock.EXPECT().GetUserIdFromContext(te.ctx).
+		te.authMock.EXPECT().ExtractUserIdFromContext(te.ctx).
 			Return(userID, nil)
 
 		card := &model.Card{ID: "id"}

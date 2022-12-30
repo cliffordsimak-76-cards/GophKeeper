@@ -14,7 +14,7 @@ func (s *Service) ListAvailableCards(
 	ctx context.Context,
 	req *api.ListAvailableCardsRequest,
 ) (*api.ListAvailableCardsResponse, error) {
-	userID, err := s.auth.GetUserIdFromContext(ctx)
+	userID, err := s.auth.ExtractUserIdFromContext(ctx)
 	if err != nil {
 		log.Printf("error get userID from context: %s", err)
 		return nil, status.Error(codes.Internal, "error get userID from context")

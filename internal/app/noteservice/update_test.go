@@ -31,7 +31,7 @@ func Test_Update(t *testing.T) {
 			Text: "text",
 		}
 
-		te.authMock.EXPECT().GetUserIdFromContext(te.ctx).
+		te.authMock.EXPECT().ExtractUserIdFromContext(te.ctx).
 			Return("", errAny)
 
 		_, err := te.service.UpdateNote(te.ctx, req)
@@ -49,7 +49,7 @@ func Test_Update(t *testing.T) {
 		}
 
 		userID := "user-id"
-		te.authMock.EXPECT().GetUserIdFromContext(te.ctx).
+		te.authMock.EXPECT().ExtractUserIdFromContext(te.ctx).
 			Return(userID, nil)
 
 		note := adapters.UpdateNoteRequestFromPb(req, userID)
@@ -71,7 +71,7 @@ func Test_Update(t *testing.T) {
 		}
 
 		userID := "user-id"
-		te.authMock.EXPECT().GetUserIdFromContext(te.ctx).
+		te.authMock.EXPECT().ExtractUserIdFromContext(te.ctx).
 			Return(userID, nil)
 
 		note := &model.Note{ID: "id"}

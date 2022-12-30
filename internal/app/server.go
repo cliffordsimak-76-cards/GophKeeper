@@ -17,6 +17,7 @@ import (
 	"github.com/cliffordsimak-76-cards/gophkeeper/internal/config"
 	"github.com/cliffordsimak-76-cards/gophkeeper/internal/crypto"
 	"github.com/cliffordsimak-76-cards/gophkeeper/internal/db"
+	"github.com/cliffordsimak-76-cards/gophkeeper/internal/jwt"
 	"github.com/cliffordsimak-76-cards/gophkeeper/internal/repository"
 	api "github.com/cliffordsimak-76-cards/gophkeeper/pkg/gophkeeper-api"
 	"google.golang.org/grpc"
@@ -32,10 +33,8 @@ const (
 func Run(ctx context.Context, cfg *config.Config) error {
 	env := initEnv(ctx, cfg)
 
-	interceptor := auth.NewAuthInterceptor(env.jwt)
 	serverOptions := []grpc.ServerOption{
-		grpc.UnaryInterceptor(interceptor.Unary()),
-		grpc.StreamInterceptor(interceptor.Stream()),
+		grpc.UnaryInterceptor(env.auth.Unary()),
 	}
 
 	if cfg.EnableTLS {
@@ -72,7 +71,7 @@ type Env struct {
 	db        *db.ClientImpl
 	cfg       *config.Config
 	repoGroup *repository.Group
-	jwt       *auth.JWTImpl
+	jwt       *jwt.JWTImpl
 	auth      *auth.AuthImpl
 	crypto    *crypto.CryptoImpl
 }
@@ -80,14 +79,14 @@ type Env struct {
 func initEnv(ctx context.Context, cfg *config.Config) *Env {
 	dbClient, err := db.NewClient(cfg)
 	if err != nil {
-		log.Fatal("not connect to db ", err)
+		log.Fatal("error connect to db ", err)
 	}
 
 	repoGroup := repository.NewGroup(dbClient)
 
-	jwt := auth.NewJWTImpl(cfg)
+	jwt := jwt.NewJWTImpl(cfg)
 
-	auth := auth.NewAuth(cfg)
+	auth := auth.NewAuthImpl(jwt)
 
 	crypto := &crypto.CryptoImpl{}
 

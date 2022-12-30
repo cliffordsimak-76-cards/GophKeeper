@@ -17,7 +17,7 @@ func Test_ListAvailableCards(t *testing.T) {
 
 		req := &api.ListAvailableCardsRequest{}
 
-		te.authMock.EXPECT().GetUserIdFromContext(te.ctx).
+		te.authMock.EXPECT().ExtractUserIdFromContext(te.ctx).
 			Return("", errAny)
 
 		_, err := te.service.ListAvailableCards(te.ctx, req)
@@ -31,7 +31,7 @@ func Test_ListAvailableCards(t *testing.T) {
 		req := &api.ListAvailableCardsRequest{}
 
 		userID := "user-id"
-		te.authMock.EXPECT().GetUserIdFromContext(te.ctx).
+		te.authMock.EXPECT().ExtractUserIdFromContext(te.ctx).
 			Return(userID, nil)
 
 		filter := adapters.CardListFilterFromPb(req, userID)
@@ -49,7 +49,7 @@ func Test_ListAvailableCards(t *testing.T) {
 		req := &api.ListAvailableCardsRequest{}
 
 		userID := "user-id"
-		te.authMock.EXPECT().GetUserIdFromContext(te.ctx).
+		te.authMock.EXPECT().ExtractUserIdFromContext(te.ctx).
 			Return(userID, nil)
 
 		filter := adapters.CardListFilterFromPb(req, userID)

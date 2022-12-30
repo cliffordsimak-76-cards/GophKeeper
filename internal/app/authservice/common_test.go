@@ -5,8 +5,8 @@ import (
 	"errors"
 	"testing"
 
-	"github.com/cliffordsimak-76-cards/gophkeeper/internal/auth"
 	"github.com/cliffordsimak-76-cards/gophkeeper/internal/crypto"
+	"github.com/cliffordsimak-76-cards/gophkeeper/internal/jwt"
 	"github.com/cliffordsimak-76-cards/gophkeeper/internal/repository"
 	"github.com/golang/mock/gomock"
 )
@@ -17,7 +17,7 @@ type testEnv struct {
 	ctx context.Context
 
 	userRepoMock *repository.MockUserRepository
-	jwtMock      *auth.MockJWT
+	jwtMock      *jwt.MockJWT
 	cryptoMock   *crypto.MockCrypto
 
 	service *Service
@@ -28,7 +28,7 @@ func newTestEnv(t *testing.T) *testEnv {
 	te := &testEnv{
 		ctx:          context.Background(),
 		userRepoMock: repository.NewMockUserRepository(ctrl),
-		jwtMock:      auth.NewMockJWT(ctrl),
+		jwtMock:      jwt.NewMockJWT(ctrl),
 		cryptoMock:   crypto.NewMockCrypto(ctrl),
 	}
 

@@ -17,7 +17,7 @@ func Test_ListAvailableAccounts(t *testing.T) {
 
 		req := &api.ListAvailableAccountsRequest{}
 
-		te.authMock.EXPECT().GetUserIdFromContext(te.ctx).
+		te.authMock.EXPECT().ExtractUserIdFromContext(te.ctx).
 			Return("", errAny)
 
 		_, err := te.service.ListAvailableAccounts(te.ctx, req)
@@ -31,7 +31,7 @@ func Test_ListAvailableAccounts(t *testing.T) {
 		req := &api.ListAvailableAccountsRequest{}
 
 		userID := "user-id"
-		te.authMock.EXPECT().GetUserIdFromContext(te.ctx).
+		te.authMock.EXPECT().ExtractUserIdFromContext(te.ctx).
 			Return(userID, nil)
 
 		filter := adapters.AccountListFilterFromPb(req, userID)
@@ -49,7 +49,7 @@ func Test_ListAvailableAccounts(t *testing.T) {
 		req := &api.ListAvailableAccountsRequest{}
 
 		userID := "user-id"
-		te.authMock.EXPECT().GetUserIdFromContext(te.ctx).
+		te.authMock.EXPECT().ExtractUserIdFromContext(te.ctx).
 			Return(userID, nil)
 
 		filter := adapters.AccountListFilterFromPb(req, userID)

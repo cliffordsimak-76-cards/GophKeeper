@@ -11,6 +11,7 @@ type Account struct {
 	Name      string       `db:"name"`
 	Login     string       `db:"login"`
 	Password  string       `db:"password"`
+	Metadata  string       `db:"metadata"`
 	CreatedAt time.Time    `db:"created_at" goqu:"skipupdate"`
 	UpdatedAt sql.NullTime `db:"updated_at"`
 }

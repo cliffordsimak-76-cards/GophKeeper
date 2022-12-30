@@ -7,12 +7,13 @@ import (
 
 func CardToPb(card *model.Card) *api.Card {
 	return &api.Card{
-		Id:     card.ID,
-		Name:   card.Name,
-		Number: card.Number,
-		Holder: card.Holder,
-		Expire: card.Expire,
-		Cvc:    card.CVC,
+		Id:       card.ID,
+		Name:     card.Name,
+		Number:   card.Number,
+		Holder:   card.Holder,
+		Expire:   card.Expire,
+		Cvc:      card.CVC,
+		Metadata: card.Metadata,
 	}
 }
 

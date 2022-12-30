@@ -17,15 +17,17 @@ func Test_NoteToPb(t *testing.T) {
 	})
 	t.Run("all data filler", func(t *testing.T) {
 		data := &model.Note{
-			ID:   "id",
-			Name: "name",
-			Text: "text",
+			ID:       "id",
+			Name:     "name",
+			Text:     "text",
+			Metadata: "metadata",
 		}
 		mapedData := NoteToPb(data)
 		expectedData := &api.Note{
-			Id:   "id",
-			Name: "name",
-			Text: "text",
+			Id:       "id",
+			Name:     "name",
+			Text:     "text",
+			Metadata: "metadata",
 		}
 		require.Equal(t, expectedData, mapedData)
 	})

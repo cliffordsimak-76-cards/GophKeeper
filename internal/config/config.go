@@ -18,7 +18,7 @@ type Config struct {
 	PgPingInterval time.Duration `env:"PG_PING_INTERVAL" envDefault:"10m"`
 
 	SecretKey     string        `env:"SECRET_KEY" envDefault:"secret"`
-	TokenDuration time.Duration `env:"TOKEN_DURATION" envDefault:"15m"`
+	TokenDuration time.Duration `env:"TOKEN_DURATION" envDefault:""`
 }
 
 func NewConfig() (*Config, error) {

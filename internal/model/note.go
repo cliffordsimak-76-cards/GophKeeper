@@ -10,6 +10,7 @@ type Note struct {
 	UserID    string       `db:"user_id"`
 	Name      string       `db:"name"`
 	Text      string       `db:"text"`
+	Metadata  string       `db:"metadata"`
 	CreatedAt time.Time    `db:"created_at" goqu:"skipupdate"`
 	UpdatedAt sql.NullTime `db:"updated_at"`
 }

@@ -12,6 +12,7 @@ func CreateAccountRequestFromPb(req *api.CreateAccountRequest, userID string) *m
 		UserID:   userID,
 		Login:    req.GetLogin(),
 		Password: req.GetPassword(),
+		Metadata: req.GetMetadata(),
 	}
 }
 
@@ -22,6 +23,7 @@ func UpdateAccountRequestFromPb(req *api.UpdateAccountRequest, userID string) *m
 		UserID:   userID,
 		Login:    req.GetLogin(),
 		Password: req.GetPassword(),
+		Metadata: req.GetMetadata(),
 	}
 }
 

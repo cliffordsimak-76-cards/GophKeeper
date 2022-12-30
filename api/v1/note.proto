@@ -18,17 +18,20 @@ message Note {
   string id = 1;
   string name = 2;
   string text = 3;
+  string metadata = 4;
 }
 
 message CreateNoteRequest {
   string name = 1;
   string text = 2;
+  string metadata = 3;
 }
 
 message UpdateNoteRequest {
   string id = 1;
   string name = 2;
   string text = 3;
+  string metadata = 4;
 }
 
 message GetNoteRequest{

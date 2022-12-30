@@ -7,9 +7,10 @@ import (
 
 func NoteToPb(note *model.Note) *api.Note {
 	return &api.Note{
-		Id:   note.ID,
-		Name: note.Name,
-		Text: note.Text,
+		Id:       note.ID,
+		Name:     note.Name,
+		Text:     note.Text,
+		Metadata: note.Metadata,
 	}
 }
 

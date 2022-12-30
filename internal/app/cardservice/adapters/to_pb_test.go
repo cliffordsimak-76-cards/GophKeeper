@@ -17,21 +17,23 @@ func Test_CardToPb(t *testing.T) {
 	})
 	t.Run("all data filler", func(t *testing.T) {
 		data := &model.Card{
-			ID:     "id",
-			Name:   "name",
-			Number: "number",
-			Holder: "holder",
-			Expire: "expire",
-			CVC:    "cvc",
+			ID:       "id",
+			Name:     "name",
+			Number:   "number",
+			Holder:   "holder",
+			Expire:   "expire",
+			CVC:      "cvc",
+			Metadata: "metadata",
 		}
 		mapedData := CardToPb(data)
 		expectedData := &api.Card{
-			Id:     "id",
-			Name:   "name",
-			Number: "number",
-			Holder: "holder",
-			Expire: "expire",
-			Cvc:    "cvc",
+			Id:       "id",
+			Name:     "name",
+			Number:   "number",
+			Holder:   "holder",
+			Expire:   "expire",
+			Metadata: "metadata",
+			Cvc:      "cvc",
 		}
 		require.Equal(t, expectedData, mapedData)
 	})

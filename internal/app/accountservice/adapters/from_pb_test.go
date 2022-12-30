@@ -24,6 +24,7 @@ func Test_CreateAccountRequestFromPb(t *testing.T) {
 			Name:     "name",
 			Login:    "login",
 			Password: "password",
+			Metadata: "metadata",
 		}
 		userID := "user-id"
 		data := CreateAccountRequestFromPb(req, userID)
@@ -32,6 +33,7 @@ func Test_CreateAccountRequestFromPb(t *testing.T) {
 			UserID:   userID,
 			Login:    "login",
 			Password: "password",
+			Metadata: "metadata",
 		}
 		require.Equal(t, expectedData, data)
 	})
@@ -53,6 +55,7 @@ func Test_UpdateAccountRequestFromPb(t *testing.T) {
 			Name:     "name",
 			Login:    "login",
 			Password: "password",
+			Metadata: "metadata",
 		}
 		userID := "user-id"
 		data := UpdateAccountRequestFromPb(req, userID)
@@ -62,6 +65,7 @@ func Test_UpdateAccountRequestFromPb(t *testing.T) {
 			UserID:   userID,
 			Login:    "login",
 			Password: "password",
+			Metadata: "metadata",
 		}
 		require.Equal(t, expectedData, data)
 	})

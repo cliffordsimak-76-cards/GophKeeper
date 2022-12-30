@@ -13,6 +13,7 @@ type Card struct {
 	Holder    string       `db:"holder"`
 	Expire    string       `db:"expire"`
 	CVC       string       `db:"cvc"`
+	Metadata  string       `db:"metadata"`
 	CreatedAt time.Time    `db:"created_at" goqu:"skipupdate"`
 	UpdatedAt sql.NullTime `db:"updated_at"`
 }

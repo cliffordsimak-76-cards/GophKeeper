@@ -21,6 +21,7 @@ create table if not exists cards
     holder      text,
     expire      text,
     cvc         text,
+    metadata    text,
     created_at  timestamp with time zone,
     updated_at  timestamp with time zone,
     constraint cards_pkey
@@ -36,6 +37,7 @@ create table if not exists accounts
     user_id     text,
     login       text,
     password    text,
+    metadata    text,
     created_at  timestamp with time zone,
     updated_at  timestamp with time zone,
     constraint accounts_pkey
@@ -52,6 +54,7 @@ create table if not exists notes
     text        text,
     created_at  timestamp with time zone,
     updated_at  timestamp with time zone,
+    metadata    text,
     constraint notes_pkey
         primary key (id),
     constraint notes_users_id_fkey

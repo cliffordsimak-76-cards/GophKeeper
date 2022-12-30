@@ -17,11 +17,11 @@ type Service struct {
 func NewService(
 	repoGroup *repository.Group,
 	auth auth.Auth,
-	crypto    crypto.Crypto,
+	crypto crypto.Crypto,
 ) *Service {
 	return &Service{
 		repoGroup: repoGroup,
 		auth:      auth,
-		crypto: crypto,
+		crypto:    crypto,
 	}
 }

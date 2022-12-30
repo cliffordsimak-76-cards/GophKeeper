@@ -11,6 +11,7 @@ func AccountToPb(account *model.Account) *api.Account {
 		Name:     account.Name,
 		Login:    account.Login,
 		Password: account.Password,
+		Metadata: account.Metadata,
 	}
 }
 

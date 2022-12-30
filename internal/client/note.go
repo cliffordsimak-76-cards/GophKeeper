@@ -10,9 +10,10 @@ import (
 
 // Note represents users note entry
 type Note struct {
-	ID   string
-	Name string
-	Text string
+	ID       string
+	Name     string
+	Text     string
+	Metadata string
 }
 
 func (r *CommandRunner) createNote(ctx context.Context) error {
@@ -22,6 +23,7 @@ func (r *CommandRunner) createNote(ctx context.Context) error {
 	note := &Note{}
 	note.Name = getInput("name:", notEmpty)
 	note.Text = getInput("text:", notEmpty)
+	note.Metadata = getInput("metadata:", any)
 
 	req := buildCreateNoteRequest(note)
 	_, err := r.client.NoteClient.CreateNote(ctx, req)
@@ -93,6 +95,10 @@ func (r *CommandRunner) updateNote(ctx context.Context) error {
 	text := getInput(fmt.Sprintf("text [%s]:", note.Text), any)
 	if text != "" {
 		newNote.Text = text
+	}
+	metadata := getInput(fmt.Sprintf("metadata [%s]:", note.Metadata), any)
+	if metadata != "" {
+		newNote.Metadata = metadata
 	}
 
 	req := buildUpdateNoteRequest(newNote)

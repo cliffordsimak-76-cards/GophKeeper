@@ -21,6 +21,7 @@ func Test_AccountToPb(t *testing.T) {
 			Name:     "name",
 			Login:    "login",
 			Password: "password",
+			Metadata: "metadata",
 		}
 		mapedData := AccountToPb(data)
 		expectedData := &api.Account{
@@ -28,6 +29,7 @@ func Test_AccountToPb(t *testing.T) {
 			Name:     "name",
 			Login:    "login",
 			Password: "password",
+			Metadata: "metadata",
 		}
 		require.Equal(t, expectedData, mapedData)
 	})

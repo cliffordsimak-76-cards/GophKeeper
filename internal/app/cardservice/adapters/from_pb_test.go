@@ -21,21 +21,23 @@ func Test_CreateCardRequestFromPb(t *testing.T) {
 	})
 	t.Run("all data filler", func(t *testing.T) {
 		req := &api.CreateCardRequest{
-			Name:   "name",
-			Number: "number",
-			Holder: "holder",
-			Expire: "expire",
-			Cvc:    "cvc",
+			Name:     "name",
+			Number:   "number",
+			Holder:   "holder",
+			Expire:   "expire",
+			Cvc:      "cvc",
+			Metadata: "metadata",
 		}
 		userID := "user-id"
 		data := CreateCardRequestFromPb(req, userID)
 		expectedData := &model.Card{
-			Name:   "name",
-			UserID: userID,
-			Number: "number",
-			Holder: "holder",
-			Expire: "expire",
-			CVC:    "cvc",
+			Name:     "name",
+			UserID:   userID,
+			Number:   "number",
+			Holder:   "holder",
+			Expire:   "expire",
+			CVC:      "cvc",
+			Metadata: "metadata",
 		}
 		require.Equal(t, expectedData, data)
 	})
@@ -53,21 +55,23 @@ func Test_UpdateCardRequestFromPb(t *testing.T) {
 	})
 	t.Run("all data filler", func(t *testing.T) {
 		req := &api.UpdateCardRequest{
-			Name:   "name",
-			Number: "number",
-			Holder: "holder",
-			Expire: "expire",
-			Cvc:    "cvc",
+			Name:     "name",
+			Number:   "number",
+			Holder:   "holder",
+			Expire:   "expire",
+			Cvc:      "cvc",
+			Metadata: "metadata",
 		}
 		userID := "user-id"
 		data := UpdateCardRequestFromPb(req, userID)
 		expectedData := &model.Card{
-			Name:   "name",
-			UserID: userID,
-			Number: "number",
-			Holder: "holder",
-			Expire: "expire",
-			CVC:    "cvc",
+			Name:     "name",
+			UserID:   userID,
+			Number:   "number",
+			Holder:   "holder",
+			Expire:   "expire",
+			CVC:      "cvc",
+			Metadata: "metadata",
 		}
 		require.Equal(t, expectedData, data)
 	})

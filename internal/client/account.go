@@ -14,6 +14,7 @@ type Account struct {
 	Name     string
 	Login    string
 	Password string
+	Metadata string
 }
 
 func (r *CommandRunner) createAccount(ctx context.Context) error {
@@ -24,6 +25,7 @@ func (r *CommandRunner) createAccount(ctx context.Context) error {
 	account.Name = getInput("name:", notEmpty)
 	account.Login = getInput("login:", notEmpty)
 	account.Password = getInput("password:", notEmpty)
+	account.Metadata = getInput("metadata:", any)
 
 	req := buildCreateAccountRequest(account)
 	_, err := r.client.AccountClient.CreateAccount(ctx, req)
@@ -99,6 +101,10 @@ func (r *CommandRunner) updateAccount(ctx context.Context) error {
 	password := getInput(fmt.Sprintf("password [%s]:", account.Password), any)
 	if password != "" {
 		newAccount.Password = password
+	}
+	metadata := getInput(fmt.Sprintf("metadata [%s]:", account.Metadata), any)
+	if metadata != "" {
+		newAccount.Metadata = metadata
 	}
 
 	req := buildUpdateAccountRequest(newAccount)

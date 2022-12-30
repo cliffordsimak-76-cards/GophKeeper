@@ -21,6 +21,7 @@ message Card {
   string holder = 4;
   string expire = 5;
   string cvc = 6;
+  string metadata = 7;
 }
 
 message CreateCardRequest {
@@ -29,6 +30,7 @@ message CreateCardRequest {
   string holder = 3;
   string expire = 4;
   string cvc = 5;
+  string metadata = 6;
 }
 
 message UpdateCardRequest {
@@ -38,6 +40,7 @@ message UpdateCardRequest {
   string holder = 4;
   string expire = 5;
   string cvc = 6;
+  string metadata = 7;
 }
 
 message GetCardRequest{

@@ -19,12 +19,14 @@ message Account {
   string name = 2;
   string login = 3;
   string password = 4;
+  string metadata = 5;
 }
 
 message CreateAccountRequest {
   string name = 1;
   string login = 2;
   string password = 3;
+  string metadata = 4;
 }
 
 message UpdateAccountRequest {
@@ -32,6 +34,7 @@ message UpdateAccountRequest {
   string name = 2;
   string login = 3;
   string password = 4;
+  string metadata = 5;
 }
 
 message GetAccountRequest{

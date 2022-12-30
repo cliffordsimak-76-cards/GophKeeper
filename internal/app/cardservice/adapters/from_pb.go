@@ -8,24 +8,26 @@ import (
 
 func CreateCardRequestFromPb(req *api.CreateCardRequest, userID string) *model.Card {
 	return &model.Card{
-		Name:   req.GetName(),
-		UserID: userID,
-		Number: req.GetNumber(),
-		Holder: req.GetHolder(),
-		Expire: req.GetExpire(),
-		CVC:    req.GetCvc(),
+		Name:     req.GetName(),
+		UserID:   userID,
+		Number:   req.GetNumber(),
+		Holder:   req.GetHolder(),
+		Expire:   req.GetExpire(),
+		CVC:      req.GetCvc(),
+		Metadata: req.GetMetadata(),
 	}
 }
 
 func UpdateCardRequestFromPb(req *api.UpdateCardRequest, userID string) *model.Card {
 	return &model.Card{
-		ID:     req.GetId(),
-		Name:   req.GetName(),
-		UserID: userID,
-		Number: req.GetNumber(),
-		Holder: req.GetHolder(),
-		Expire: req.GetExpire(),
-		CVC:    req.GetCvc(),
+		ID:       req.GetId(),
+		Name:     req.GetName(),
+		UserID:   userID,
+		Number:   req.GetNumber(),
+		Holder:   req.GetHolder(),
+		Expire:   req.GetExpire(),
+		CVC:      req.GetCvc(),
+		Metadata: req.GetMetadata(),
 	}
 }
 

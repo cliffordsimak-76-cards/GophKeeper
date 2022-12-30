@@ -8,18 +8,20 @@ import (
 
 func CreateNoteRequestFromPb(req *api.CreateNoteRequest, userID string) *model.Note {
 	return &model.Note{
-		Name:   req.GetName(),
-		UserID: userID,
-		Text:   req.GetText(),
+		Name:     req.GetName(),
+		UserID:   userID,
+		Text:     req.GetText(),
+		Metadata: req.GetMetadata(),
 	}
 }
 
 func UpdateNoteRequestFromPb(req *api.UpdateNoteRequest, userID string) *model.Note {
 	return &model.Note{
-		ID:     req.GetId(),
-		Name:   req.GetName(),
-		UserID: userID,
-		Text:   req.GetText(),
+		ID:       req.GetId(),
+		Name:     req.GetName(),
+		UserID:   userID,
+		Text:     req.GetText(),
+		Metadata: req.GetMetadata(),
 	}
 }
 

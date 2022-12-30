@@ -10,12 +10,13 @@ import (
 
 // Card represents users Credit card entry
 type Card struct {
-	ID     string
-	Name   string
-	Number string
-	Expire string
-	CVC    string
-	Holder string
+	ID       string
+	Name     string
+	Number   string
+	Expire   string
+	CVC      string
+	Holder   string
+	Metadata string
 }
 
 func (r *CommandRunner) createCard(ctx context.Context) error {
@@ -28,6 +29,7 @@ func (r *CommandRunner) createCard(ctx context.Context) error {
 	card.Expire = getInput("expire:", notEmpty)
 	card.CVC = getInput("CVC:", notEmpty)
 	card.Holder = getInput("holder:", notEmpty)
+	card.Metadata = getInput("metadata:", any)
 
 	req := buildCreateCardRequest(card)
 	_, err := r.client.CardClient.CreateCard(ctx, req)
@@ -111,6 +113,10 @@ func (r *CommandRunner) updateCard(ctx context.Context) error {
 	holder := getInput(fmt.Sprintf("holder [%s]:", card.Holder), any)
 	if holder != "" {
 		newCard.Holder = holder
+	}
+	metadata := getInput(fmt.Sprintf("metadata [%s]:", card.Metadata), any)
+	if metadata != "" {
+		newCard.Metadata = metadata
 	}
 
 	req := buildUpdateCardRequest(newCard)

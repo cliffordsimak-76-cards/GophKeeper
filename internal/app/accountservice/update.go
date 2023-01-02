@@ -11,6 +11,7 @@ import (
 	"google.golang.org/grpc/status"
 )
 
+// CreateAccount updates a login-password pair
 func (s *Service) UpdateAccount(
 	ctx context.Context,
 	req *api.UpdateAccountRequest,

@@ -33,31 +33,61 @@ func (m *MockCrypto) EXPECT() *MockCryptoMockRecorder {
 	return m.recorder
 }
 
-// HashAndSalt mocks base method.
-func (m *MockCrypto) HashAndSalt(pwd string) (string, error) {
+// Decrypt mocks base method.
+func (m *MockCrypto) Decrypt(arg0 string) (string, error) {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "HashAndSalt", pwd)
+	ret := m.ctrl.Call(m, "Decrypt", arg0)
+	ret0, _ := ret[0].(string)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// Decrypt indicates an expected call of Decrypt.
+func (mr *MockCryptoMockRecorder) Decrypt(arg0 interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Decrypt", reflect.TypeOf((*MockCrypto)(nil).Decrypt), arg0)
+}
+
+// Encrypt mocks base method.
+func (m *MockCrypto) Encrypt(arg0 string) (string, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "Encrypt", arg0)
+	ret0, _ := ret[0].(string)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// Encrypt indicates an expected call of Encrypt.
+func (mr *MockCryptoMockRecorder) Encrypt(arg0 interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Encrypt", reflect.TypeOf((*MockCrypto)(nil).Encrypt), arg0)
+}
+
+// HashAndSalt mocks base method.
+func (m *MockCrypto) HashAndSalt(arg0 string) (string, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "HashAndSalt", arg0)
 	ret0, _ := ret[0].(string)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
 
 // HashAndSalt indicates an expected call of HashAndSalt.
-func (mr *MockCryptoMockRecorder) HashAndSalt(pwd interface{}) *gomock.Call {
+func (mr *MockCryptoMockRecorder) HashAndSalt(arg0 interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "HashAndSalt", reflect.TypeOf((*MockCrypto)(nil).HashAndSalt), pwd)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "HashAndSalt", reflect.TypeOf((*MockCrypto)(nil).HashAndSalt), arg0)
 }
 
 // IsCorrectPassword mocks base method.
-func (m *MockCrypto) IsCorrectPassword(hashedPwd, plainPwd string) bool {
+func (m *MockCrypto) IsCorrectPassword(arg0, arg1 string) bool {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "IsCorrectPassword", hashedPwd, plainPwd)
+	ret := m.ctrl.Call(m, "IsCorrectPassword", arg0, arg1)
 	ret0, _ := ret[0].(bool)
 	return ret0
 }
 
 // IsCorrectPassword indicates an expected call of IsCorrectPassword.
-func (mr *MockCryptoMockRecorder) IsCorrectPassword(hashedPwd, plainPwd interface{}) *gomock.Call {
+func (mr *MockCryptoMockRecorder) IsCorrectPassword(arg0, arg1 interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "IsCorrectPassword", reflect.TypeOf((*MockCrypto)(nil).IsCorrectPassword), hashedPwd, plainPwd)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "IsCorrectPassword", reflect.TypeOf((*MockCrypto)(nil).IsCorrectPassword), arg0, arg1)
 }

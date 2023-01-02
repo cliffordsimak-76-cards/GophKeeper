@@ -7,6 +7,7 @@ import (
 	api "github.com/cliffordsimak-76-cards/gophkeeper/pkg/gophkeeper-api"
 )
 
+// Service is a user manager
 type Service struct {
 	api.UnimplementedAuthServiceServer
 	repoGroup *repository.Group
@@ -14,6 +15,7 @@ type Service struct {
 	crypto    crypto.Crypto
 }
 
+// NewService creates a new user manager
 func NewService(
 	repoGroup *repository.Group,
 	jwt jwt.JWT,

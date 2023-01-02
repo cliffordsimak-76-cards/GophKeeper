@@ -14,7 +14,7 @@ import (
 	"google.golang.org/grpc/status"
 )
 
-func (s *Service) Get(
+func (s *Service) GetCard(
 	ctx context.Context,
 	req *api.GetCardRequest,
 ) (*api.Card, error) {
@@ -31,6 +31,12 @@ func (s *Service) Get(
 			return nil, status.Error(codes.NotFound, "card is not found")
 		}
 		return nil, status.Error(codes.Internal, "error get card in db")
+	}
+
+	card, err = s.decryptCard(card)
+	if err != nil {
+		log.Printf("error decrypt card: %s", err)
+		return nil, status.Error(codes.Internal, "error decrypt card")
 	}
 
 	return adapters.CardToPb(card), nil

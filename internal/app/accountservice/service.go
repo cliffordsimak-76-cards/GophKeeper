@@ -6,12 +6,14 @@ import (
 	api "github.com/cliffordsimak-76-cards/gophkeeper/pkg/gophkeeper-api"
 )
 
+// Service is a login-password manager
 type Service struct {
 	api.UnimplementedAccountServiceServer
 	repoGroup *repository.Group
 	auth      auth.Auth
 }
 
+// NewService creates a new login-password manager
 func NewService(
 	repoGroup *repository.Group,
 	auth auth.Auth,

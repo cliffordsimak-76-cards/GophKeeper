@@ -88,7 +88,7 @@ func initEnv(ctx context.Context, cfg *config.Config) *Env {
 
 	auth := auth.NewAuthImpl(jwt)
 
-	crypto := &crypto.CryptoImpl{}
+	crypto := crypto.NewCryptoImpl(cfg)
 
 	return &Env{
 		db:        dbClient,

@@ -11,7 +11,7 @@ import (
 	"google.golang.org/grpc/status"
 )
 
-func (s *Service) Update(
+func (s *Service) UpdateCard(
 	ctx context.Context,
 	req *api.UpdateCardRequest,
 ) (*api.Card, error) {
@@ -28,6 +28,13 @@ func (s *Service) Update(
 	}
 
 	card := adapters.UpdateCardRequestFromPb(req, userID)
+
+	card, err = s.encryptCard(card)
+	if err != nil {
+		log.Printf("error encrypt card: %s", err)
+		return nil, status.Error(codes.Internal, "error encrypt card")
+	}
+
 	card, err = s.repoGroup.CardRepository.Update(ctx, card)
 	if err != nil {
 		log.Printf("error update card in db: %s", err)

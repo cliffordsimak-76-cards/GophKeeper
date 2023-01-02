@@ -6,6 +6,7 @@ import (
 	"github.com/cliffordsimak-76-cards/gophkeeper/internal/app/cardservice/adapters"
 	"github.com/cliffordsimak-76-cards/gophkeeper/internal/model"
 	api "github.com/cliffordsimak-76-cards/gophkeeper/pkg/gophkeeper-api"
+	"github.com/golang/mock/gomock"
 	"github.com/stretchr/testify/require"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
@@ -17,7 +18,7 @@ func Test_Update(t *testing.T) {
 
 		req := &api.UpdateCardRequest{}
 
-		_, err := te.service.Update(te.ctx, req)
+		_, err := te.service.UpdateCard(te.ctx, req)
 		require.Error(t, err)
 		require.Equal(t, codes.InvalidArgument, status.Code(err))
 	})
@@ -36,7 +37,30 @@ func Test_Update(t *testing.T) {
 		te.authMock.EXPECT().ExtractUserIdFromContext(te.ctx).
 			Return("", errAny)
 
-		_, err := te.service.Update(te.ctx, req)
+		_, err := te.service.UpdateCard(te.ctx, req)
+		require.Error(t, err)
+		require.Equal(t, codes.Internal, status.Code(err))
+	})
+
+	t.Run("error encrypt card", func(t *testing.T) {
+		te := newTestEnv(t)
+
+		req := &api.UpdateCardRequest{
+			Name:   "name",
+			Number: "number",
+			Holder: "holder",
+			Expire: "expire",
+			Cvc:    "cvc",
+		}
+
+		userID := "user-id"
+		te.authMock.EXPECT().ExtractUserIdFromContext(te.ctx).
+			Return(userID, nil)
+
+		te.cryptoMock.EXPECT().Encrypt(gomock.Any()).
+			Return("", errAny)
+
+		_, err := te.service.UpdateCard(te.ctx, req)
 		require.Error(t, err)
 		require.Equal(t, codes.Internal, status.Code(err))
 	})
@@ -56,11 +80,14 @@ func Test_Update(t *testing.T) {
 		te.authMock.EXPECT().ExtractUserIdFromContext(te.ctx).
 			Return(userID, nil)
 
-		card := adapters.UpdateCardRequestFromPb(req, userID)
-		te.cardRepoMock.EXPECT().Update(te.ctx, card).
+		te.cryptoMock.EXPECT().Encrypt(gomock.Any()).
+			Return(gomock.Any().String(), nil).
+			AnyTimes()
+
+		te.cardRepoMock.EXPECT().Update(te.ctx, gomock.Any()).
 			Return(nil, errAny)
 
-		_, err := te.service.Update(te.ctx, req)
+		_, err := te.service.UpdateCard(te.ctx, req)
 		require.Error(t, err)
 		require.Equal(t, codes.Internal, status.Code(err))
 	})
@@ -80,11 +107,15 @@ func Test_Update(t *testing.T) {
 		te.authMock.EXPECT().ExtractUserIdFromContext(te.ctx).
 			Return(userID, nil)
 
+		te.cryptoMock.EXPECT().Encrypt(gomock.Any()).
+			Return(gomock.Any().String(), nil).
+			AnyTimes()
+
 		card := &model.Card{ID: "id"}
-		te.cardRepoMock.EXPECT().Update(te.ctx, adapters.UpdateCardRequestFromPb(req, userID)).
+		te.cardRepoMock.EXPECT().Update(te.ctx, gomock.Any()).
 			Return(card, nil)
 
-		response, err := te.service.Update(te.ctx, req)
+		response, err := te.service.UpdateCard(te.ctx, req)
 		require.NoError(t, err)
 		require.Equal(t, adapters.CardToPb(card), response)
 	})

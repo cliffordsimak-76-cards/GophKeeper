@@ -14,6 +14,7 @@ import (
 	"google.golang.org/grpc/status"
 )
 
+// GetAccount gets a login-password pair
 func (s *Service) GetAccount(
 	ctx context.Context,
 	req *api.GetAccountRequest,

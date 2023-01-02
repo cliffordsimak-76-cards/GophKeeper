@@ -28,6 +28,13 @@ func (s *Service) CreateCard(
 	}
 
 	card := adapters.CreateCardRequestFromPb(req, userID)
+
+	card, err = s.encryptCard(card)
+	if err != nil {
+		log.Printf("error encrypt card: %s", err)
+		return nil, status.Error(codes.Internal, "error encrypt card")
+	}
+
 	card, err = s.repoGroup.CardRepository.Create(ctx, card)
 	if err != nil {
 		log.Printf("error create card in db: %s", err)

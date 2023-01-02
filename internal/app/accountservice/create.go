@@ -11,6 +11,7 @@ import (
 	"google.golang.org/grpc/status"
 )
 
+// CreateAccount creates a login-password pair
 func (s *Service) CreateAccount(
 	ctx context.Context,
 	req *api.CreateAccountRequest,

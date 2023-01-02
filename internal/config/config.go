@@ -17,8 +17,10 @@ type Config struct {
 	PgIdleConn     int           `env:"PG_MAX_IDLE_CONN" envDefault:"5"`
 	PgPingInterval time.Duration `env:"PG_PING_INTERVAL" envDefault:"10m"`
 
+	EncryptPassword string `env:"ENCRYPT_KEY" envDefault:"LrjOs4X9dmUFswtxmbsw9hKs2xqgAwxL"`
+
 	SecretKey     string        `env:"SECRET_KEY" envDefault:"secret"`
-	TokenDuration time.Duration `env:"TOKEN_DURATION" envDefault:""`
+	TokenDuration time.Duration `env:"TOKEN_DURATION" envDefault:"15m"`
 }
 
 func NewConfig() (*Config, error) {

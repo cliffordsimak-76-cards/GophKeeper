@@ -13,7 +13,7 @@ import (
 )
 
 // CreateAccount updates a login-password pair
-func (s *Service) UpdateAccount(
+func (s *service) UpdateAccount(
 	ctx context.Context,
 	req *api.UpdateAccountRequest,
 ) (*api.Account, error) {

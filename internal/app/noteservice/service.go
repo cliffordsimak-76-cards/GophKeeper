@@ -6,17 +6,18 @@ import (
 	api "github.com/cliffordsimak-76-cards/gophkeeper/pkg/gophkeeper-api"
 )
 
-type Service struct {
+type service struct {
 	api.UnimplementedNoteServiceServer
 	repoGroup *repository.Group
 	auth      auth.Client
 }
 
+// NewService creates a new note manager
 func NewService(
 	repoGroup *repository.Group,
 	auth auth.Client,
-) *Service {
-	return &Service{
+) *service {
+	return &service{
 		repoGroup: repoGroup,
 		auth:      auth,
 	}

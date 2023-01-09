@@ -21,7 +21,7 @@ type testEnv struct {
 	jwtClientMock    *jwt.MockClient
 	cryptoClientMock *crypto.MockClient
 
-	service *Service
+	service *service
 }
 
 func newTestEnv(t *testing.T) *testEnv {

@@ -11,7 +11,7 @@ import (
 	api "github.com/cliffordsimak-76-cards/gophkeeper/pkg/gophkeeper-api"
 )
 
-func (s *Service) ListAvailableNotes(
+func (s *service) ListAvailableNotes(
 	ctx context.Context,
 	req *api.ListAvailableNotesRequest,
 ) (*api.ListAvailableNotesResponse, error) {

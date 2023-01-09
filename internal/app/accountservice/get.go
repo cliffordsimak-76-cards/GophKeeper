@@ -16,7 +16,7 @@ import (
 )
 
 // GetAccount gets a login-password pair
-func (s *Service) GetAccount(
+func (s *service) GetAccount(
 	ctx context.Context,
 	req *api.GetAccountRequest,
 ) (*api.Account, error) {

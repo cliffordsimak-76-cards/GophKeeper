@@ -71,7 +71,7 @@ func Run(ctx context.Context, cfg *config.Config) error {
 	return s.Serve(listener)
 }
 
-type Env struct {
+type env struct {
 	db        *sqlx.DB
 	cfg       *config.Config
 	repoGroup *repository.Group
@@ -80,7 +80,7 @@ type Env struct {
 	crypto    crypto.Client
 }
 
-func initEnv(ctx context.Context, cfg *config.Config) *Env {
+func initEnv(ctx context.Context, cfg *config.Config) *env {
 	db, err := db.NewClient(ctx, cfg)
 	if err != nil {
 		log.Fatal("error connect to db ", err)
@@ -94,7 +94,7 @@ func initEnv(ctx context.Context, cfg *config.Config) *Env {
 
 	crypto := crypto.NewClient(cfg)
 
-	return &Env{
+	return &env{
 		db:        db,
 		cfg:       cfg,
 		repoGroup: repoGroup,

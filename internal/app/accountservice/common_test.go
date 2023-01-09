@@ -19,7 +19,7 @@ type testEnv struct {
 	accountRepoMock *repository.MockAccountRepository
 	clientMock      *auth.MockClient
 
-	service *Service
+	service *service
 }
 
 func newTestEnv(t *testing.T) *testEnv {

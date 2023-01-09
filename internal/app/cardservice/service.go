@@ -10,26 +10,27 @@ import (
 	api "github.com/cliffordsimak-76-cards/gophkeeper/pkg/gophkeeper-api"
 )
 
-type Service struct {
+type service struct {
 	api.UnimplementedCardServiceServer
 	repoGroup *repository.Group
 	auth      auth.Client
 	crypto    crypto.Client
 }
 
+// NewService creates a new card service
 func NewService(
 	repoGroup *repository.Group,
 	auth auth.Client,
 	crypto crypto.Client,
-) *Service {
-	return &Service{
+) *service {
+	return &service{
 		repoGroup: repoGroup,
 		auth:      auth,
 		crypto:    crypto,
 	}
 }
 
-func (s *Service) encryptCard(card *model.Card) (*model.Card, error) {
+func (s *service) encryptCard(card *model.Card) (*model.Card, error) {
 	encryptedCardNumber, err := s.crypto.Encrypt(card.Number)
 	if err != nil {
 		return nil, fmt.Errorf("error encrypt card number: %w", err)
@@ -45,7 +46,7 @@ func (s *Service) encryptCard(card *model.Card) (*model.Card, error) {
 	return card, nil
 }
 
-func (s *Service) decryptCard(card *model.Card) (*model.Card, error) {
+func (s *service) decryptCard(card *model.Card) (*model.Card, error) {
 	decryptedCardNumber, err := s.crypto.Decrypt(card.Number)
 	if err != nil {
 		return nil, fmt.Errorf("error decrypt card number: %w", err)

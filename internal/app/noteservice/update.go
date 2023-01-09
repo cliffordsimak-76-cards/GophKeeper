@@ -12,7 +12,7 @@ import (
 	api "github.com/cliffordsimak-76-cards/gophkeeper/pkg/gophkeeper-api"
 )
 
-func (s *Service) UpdateNote(
+func (s *service) UpdateNote(
 	ctx context.Context,
 	req *api.UpdateNoteRequest,
 ) (*api.Note, error) {

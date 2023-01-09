@@ -11,7 +11,7 @@ import (
 	api "github.com/cliffordsimak-76-cards/gophkeeper/pkg/gophkeeper-api"
 )
 
-func (s *Service) Login(
+func (s *service) Login(
 	ctx context.Context,
 	req *api.LoginRequest,
 ) (*api.LoginResponse, error) {

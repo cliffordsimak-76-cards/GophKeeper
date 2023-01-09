@@ -6,13 +6,12 @@ import (
 
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
-	
+
 	"github.com/cliffordsimak-76-cards/gophkeeper/internal/app/accountservice/adapters"
 	api "github.com/cliffordsimak-76-cards/gophkeeper/pkg/gophkeeper-api"
-
 )
 
-func (s *Service) ListAvailableAccounts(
+func (s *service) ListAvailableAccounts(
 	ctx context.Context,
 	req *api.ListAvailableAccountsRequest,
 ) (*api.ListAvailableAccountsResponse, error) {

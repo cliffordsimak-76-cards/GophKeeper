@@ -12,7 +12,7 @@ import (
 	api "github.com/cliffordsimak-76-cards/gophkeeper/pkg/gophkeeper-api"
 )
 
-func (s *Service) UpdateCard(
+func (s *service) UpdateCard(
 	ctx context.Context,
 	req *api.UpdateCardRequest,
 ) (*api.Card, error) {

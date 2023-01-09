@@ -1,0 +1,54 @@
+syntax = "proto3";
+
+package gophkeeper.v1;
+
+option go_package = "github.com/cliffordsimak-76-cards/gophkeeper/pkg/gophkeeper-api/v1;api";
+
+service AccountService {
+  rpc CreateAccount(CreateAccountRequest) returns (Account) {}
+
+  rpc UpdateAccount(UpdateAccountRequest) returns (Account) {}
+
+  rpc GetAccount(GetAccountRequest) returns (Account) {}
+
+  rpc ListAvailableAccounts(ListAvailableAccountsRequest) returns (ListAvailableAccountsResponse) {}
+}
+
+message Account {
+  string id = 1;
+  string name = 2;
+  string login = 3;
+  string password = 4;
+  string metadata = 5;
+}
+
+message CreateAccountRequest {
+  string name = 1;
+  string login = 2;
+  string password = 3;
+  string metadata = 4;
+}
+
+message UpdateAccountRequest {
+  string id = 1;
+  string name = 2;
+  string login = 3;
+  string password = 4;
+  string metadata = 5;
+}
+
+message GetAccountRequest{
+  string id = 1;
+}
+
+message ListAvailableAccountsRequest{
+}
+
+message AvailableAccount {
+  string id = 1;
+  string name = 2;
+}
+
+message ListAvailableAccountsResponse{
+  repeated AvailableAccount accounts = 1;
+}

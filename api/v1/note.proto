@@ -1,0 +1,51 @@
+syntax = "proto3";
+
+package gophkeeper.v1;
+
+option go_package = "github.com/cliffordsimak-76-cards/gophkeeper/pkg/gophkeeper-api/v1;api";
+
+service NoteService {
+  rpc CreateNote(CreateNoteRequest) returns (Note) {}
+
+  rpc UpdateNote(UpdateNoteRequest) returns (Note) {}
+
+  rpc GetNote(GetNoteRequest) returns (Note) {}
+
+  rpc ListAvailableNotes(ListAvailableNotesRequest) returns (ListAvailableNotesResponse) {}
+}
+
+message Note {
+  string id = 1;
+  string name = 2;
+  string text = 3;
+  string metadata = 4;
+}
+
+message CreateNoteRequest {
+  string name = 1;
+  string text = 2;
+  string metadata = 3;
+}
+
+message UpdateNoteRequest {
+  string id = 1;
+  string name = 2;
+  string text = 3;
+  string metadata = 4;
+}
+
+message GetNoteRequest{
+  string id = 1;
+}
+
+message ListAvailableNotesRequest{
+}
+
+message AvailableNote {
+  string id = 1;
+  string name = 2;
+}
+
+message ListAvailableNotesResponse{
+  repeated AvailableNote notes = 1;
+}

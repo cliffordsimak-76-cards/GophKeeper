@@ -3,10 +3,11 @@ package adapters
 import (
 	"testing"
 
+	"github.com/stretchr/testify/require"
+
 	"github.com/cliffordsimak-76-cards/gophkeeper/internal/model"
 	"github.com/cliffordsimak-76-cards/gophkeeper/internal/repository"
 	api "github.com/cliffordsimak-76-cards/gophkeeper/pkg/gophkeeper-api"
-	"github.com/stretchr/testify/require"
 )
 
 func Test_CreateAccountRequestFromPb(t *testing.T) {

@@ -4,10 +4,11 @@ import (
 	"context"
 	"log"
 
-	"github.com/cliffordsimak-76-cards/gophkeeper/internal/app/cardservice/adapters"
-	api "github.com/cliffordsimak-76-cards/gophkeeper/pkg/gophkeeper-api"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
+
+	"github.com/cliffordsimak-76-cards/gophkeeper/internal/app/cardservice/adapters"
+	api "github.com/cliffordsimak-76-cards/gophkeeper/pkg/gophkeeper-api"
 )
 
 func (s *Service) ListAvailableCards(

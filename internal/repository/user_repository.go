@@ -7,24 +7,23 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/cliffordsimak-76-cards/gophkeeper/internal/db"
-	"github.com/cliffordsimak-76-cards/gophkeeper/internal/model"
 	"github.com/doug-martin/goqu/v9"
+	"github.com/jmoiron/sqlx"
+
+	"github.com/cliffordsimak-76-cards/gophkeeper/internal/model"
 )
 
 const usersTName = "users"
 
-type UserRepositoryImpl struct {
-	db db.Client
+type userRepository struct {
+	db *sqlx.DB
 }
 
-func NewUserRepositoryImpl(dbClient db.Client) *UserRepositoryImpl {
-	return &UserRepositoryImpl{
-		db: dbClient,
-	}
+func NewUserRepository(db *sqlx.DB) *userRepository {
+	return &userRepository{db}
 }
 
-func (r *UserRepositoryImpl) Create(
+func (r *userRepository) Create(
 	ctx context.Context,
 	user *model.User,
 ) (*model.User, error) {
@@ -37,7 +36,7 @@ func (r *UserRepositoryImpl) Create(
 	}
 
 	var id string
-	if err = r.db.QueryRowxContext(ctx, query).Scan(&id); err != nil {
+	if err = r.db.QueryRowContext(ctx, query).Scan(&id); err != nil {
 		return nil, fmt.Errorf("can't create user: %w", err)
 	}
 
@@ -46,7 +45,7 @@ func (r *UserRepositoryImpl) Create(
 	return user, nil
 }
 
-func (r *UserRepositoryImpl) Update(
+func (r *userRepository) Update(
 	ctx context.Context,
 	user *model.User,
 ) error {
@@ -68,7 +67,7 @@ func (r *UserRepositoryImpl) Update(
 	return nil
 }
 
-func (r *UserRepositoryImpl) Get(
+func (r *userRepository) Get(
 	ctx context.Context,
 	username string,
 ) (*model.User, error) {

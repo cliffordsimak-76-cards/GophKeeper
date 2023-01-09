@@ -5,13 +5,14 @@ import (
 	"errors"
 	"log"
 
-	"github.com/cliffordsimak-76-cards/gophkeeper/internal/app/accountservice/adapters"
-	"github.com/cliffordsimak-76-cards/gophkeeper/internal/repository"
-	api "github.com/cliffordsimak-76-cards/gophkeeper/pkg/gophkeeper-api"
 	"github.com/go-ozzo/ozzo-validation/is"
 	validation "github.com/go-ozzo/ozzo-validation/v4"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
+
+	"github.com/cliffordsimak-76-cards/gophkeeper/internal/app/accountservice/adapters"
+	"github.com/cliffordsimak-76-cards/gophkeeper/internal/repository"
+	api "github.com/cliffordsimak-76-cards/gophkeeper/pkg/gophkeeper-api"
 )
 
 // GetAccount gets a login-password pair

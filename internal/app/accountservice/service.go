@@ -10,13 +10,13 @@ import (
 type Service struct {
 	api.UnimplementedAccountServiceServer
 	repoGroup *repository.Group
-	auth      auth.Auth
+	auth      auth.Client
 }
 
 // NewService creates a new login-password manager
 func NewService(
 	repoGroup *repository.Group,
-	auth auth.Auth,
+	auth auth.Client,
 ) *Service {
 	return &Service{
 		repoGroup: repoGroup,

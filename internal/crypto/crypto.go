@@ -9,27 +9,30 @@ import (
 	"errors"
 	"io"
 
-	"github.com/cliffordsimak-76-cards/gophkeeper/internal/config"
 	"golang.org/x/crypto/bcrypt"
+
+	"github.com/cliffordsimak-76-cards/gophkeeper/internal/config"
 )
 
-type Crypto interface {
+// Client represents a crypto manager
+type Client interface {
 	HashAndSalt(string) (string, error)
 	IsCorrectPassword(string, string) bool
 	Encrypt(string) (string, error)
 	Decrypt(string) (string, error)
 }
 
-type CryptoImpl struct {
+type crypto struct {
 	cfg *config.Config
 }
 
-func NewCryptoImpl(cfg *config.Config) *CryptoImpl {
-	return &CryptoImpl{cfg}
+// NewClient returns a new client
+func NewClient(cfg *config.Config) *crypto {
+	return &crypto{cfg}
 }
 
 // HashAndSalt hashes a given string
-func (c *CryptoImpl) HashAndSalt(pwd string) (string, error) {
+func (c *crypto) HashAndSalt(pwd string) (string, error) {
 	hash, err := bcrypt.GenerateFromPassword([]byte(pwd), bcrypt.MinCost)
 	if err != nil {
 		return "", err
@@ -39,13 +42,13 @@ func (c *CryptoImpl) HashAndSalt(pwd string) (string, error) {
 }
 
 // IsCorrectPassword checks hash and password strings
-func (c *CryptoImpl) IsCorrectPassword(hashedPwd string, plainPwd string) bool {
+func (c *crypto) IsCorrectPassword(hashedPwd string, plainPwd string) bool {
 	err := bcrypt.CompareHashAndPassword([]byte(hashedPwd), []byte(plainPwd))
 	return err == nil
 }
 
 // Encrypt encrypts and authenticates plaintext
-func (c *CryptoImpl) Encrypt(str string) (string, error) {
+func (c *crypto) Encrypt(str string) (string, error) {
 	key := []byte(c.cfg.EncryptPassword)
 
 	aesblock, err := aes.NewCipher(key)
@@ -69,7 +72,7 @@ func (c *CryptoImpl) Encrypt(str string) (string, error) {
 }
 
 // Decrypt decrypts and authenticates ciphertext
-func (c *CryptoImpl) Decrypt(str string) (string, error) {
+func (c *crypto) Decrypt(str string) (string, error) {
 	key := []byte(c.cfg.EncryptPassword)
 	aesblock, err := aes.NewCipher(key)
 	if err != nil {

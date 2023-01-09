@@ -3,14 +3,15 @@ package cardservice
 import (
 	"testing"
 
-	"github.com/cliffordsimak-76-cards/gophkeeper/internal/app/cardservice/adapters"
-	"github.com/cliffordsimak-76-cards/gophkeeper/internal/model"
-	"github.com/cliffordsimak-76-cards/gophkeeper/internal/repository"
-	api "github.com/cliffordsimak-76-cards/gophkeeper/pkg/gophkeeper-api"
 	"github.com/golang/mock/gomock"
 	"github.com/stretchr/testify/require"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
+
+	"github.com/cliffordsimak-76-cards/gophkeeper/internal/app/cardservice/adapters"
+	"github.com/cliffordsimak-76-cards/gophkeeper/internal/model"
+	"github.com/cliffordsimak-76-cards/gophkeeper/internal/repository"
+	api "github.com/cliffordsimak-76-cards/gophkeeper/pkg/gophkeeper-api"
 )
 
 func Test_Get(t *testing.T) {
@@ -65,7 +66,7 @@ func Test_Get(t *testing.T) {
 		te.cardRepoMock.EXPECT().Get(te.ctx, req.GetId()).
 			Return(card, nil)
 
-		te.cryptoMock.EXPECT().Decrypt(gomock.Any()).
+		te.cryptoClientMock.EXPECT().Decrypt(gomock.Any()).
 			Return("", errAny)
 
 		_, err := te.service.GetCard(te.ctx, req)
@@ -84,7 +85,7 @@ func Test_Get(t *testing.T) {
 		te.cardRepoMock.EXPECT().Get(te.ctx, req.GetId()).
 			Return(card, nil)
 
-		te.cryptoMock.EXPECT().Decrypt(gomock.Any()).
+		te.cryptoClientMock.EXPECT().Decrypt(gomock.Any()).
 			Return(gomock.Any().String(), nil).
 			AnyTimes()
 

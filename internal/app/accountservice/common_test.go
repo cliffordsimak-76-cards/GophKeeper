@@ -5,9 +5,10 @@ import (
 	"errors"
 	"testing"
 
+	"github.com/golang/mock/gomock"
+
 	"github.com/cliffordsimak-76-cards/gophkeeper/internal/auth"
 	"github.com/cliffordsimak-76-cards/gophkeeper/internal/repository"
-	"github.com/golang/mock/gomock"
 )
 
 var errAny = errors.New("any error")
@@ -16,7 +17,7 @@ type testEnv struct {
 	ctx context.Context
 
 	accountRepoMock *repository.MockAccountRepository
-	authMock        *auth.MockAuth
+	clientMock      *auth.MockClient
 
 	service *Service
 }
@@ -26,7 +27,7 @@ func newTestEnv(t *testing.T) *testEnv {
 	te := &testEnv{
 		ctx:             context.Background(),
 		accountRepoMock: repository.NewMockAccountRepository(ctrl),
-		authMock:        auth.NewMockAuth(ctrl),
+		clientMock:      auth.NewMockClient(ctrl),
 	}
 
 	repoGroup := &repository.Group{
@@ -34,7 +35,7 @@ func newTestEnv(t *testing.T) *testEnv {
 	}
 	te.service = NewService(
 		repoGroup,
-		te.authMock,
+		te.clientMock,
 	)
 	return te
 }

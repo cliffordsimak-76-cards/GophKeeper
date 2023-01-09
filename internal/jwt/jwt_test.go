@@ -6,14 +6,15 @@ import (
 	"testing"
 	"time"
 
-	"github.com/cliffordsimak-76-cards/gophkeeper/internal/config"
 	"github.com/stretchr/testify/require"
+
+	"github.com/cliffordsimak-76-cards/gophkeeper/internal/config"
 )
 
 type testEnv struct {
 	ctx       context.Context
 	secretKey string
-	jwt       *JWTImpl
+	jwt       *client
 }
 
 func newTestEnv(t *testing.T) *testEnv {
@@ -22,7 +23,7 @@ func newTestEnv(t *testing.T) *testEnv {
 		secretKey: "secret",
 	}
 
-	te.jwt = &JWTImpl{
+	te.jwt = &client{
 		secretKey:     te.secretKey,
 		tokenDuration: 1 * time.Minute,
 	}
@@ -32,7 +33,7 @@ func newTestEnv(t *testing.T) *testEnv {
 func Test_NewJWTImpl(t *testing.T) {
 	t.Run("success", func(t *testing.T) {
 		cfg := &config.Config{}
-		require.NotNil(t, NewJWTImpl(cfg))
+		require.NotNil(t, NewClient(cfg))
 	})
 }
 

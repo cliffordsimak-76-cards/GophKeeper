@@ -3,11 +3,12 @@ package authservice
 import (
 	"testing"
 
-	"github.com/cliffordsimak-76-cards/gophkeeper/internal/model"
-	api "github.com/cliffordsimak-76-cards/gophkeeper/pkg/gophkeeper-api"
 	"github.com/stretchr/testify/require"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
+
+	"github.com/cliffordsimak-76-cards/gophkeeper/internal/model"
+	api "github.com/cliffordsimak-76-cards/gophkeeper/pkg/gophkeeper-api"
 )
 
 func Test_Register(t *testing.T) {
@@ -29,7 +30,7 @@ func Test_Register(t *testing.T) {
 			Password: "password",
 		}
 
-		te.cryptoMock.EXPECT().HashAndSalt("password").
+		te.cryptoClientMock.EXPECT().HashAndSalt("password").
 			Return("", errAny)
 
 		_, err := te.service.Register(te.ctx, req)
@@ -46,7 +47,7 @@ func Test_Register(t *testing.T) {
 		}
 
 		hashedPwd := "hashedPwd"
-		te.cryptoMock.EXPECT().HashAndSalt("password").
+		te.cryptoClientMock.EXPECT().HashAndSalt("password").
 			Return(hashedPwd, nil)
 
 		user := buildUser("username", hashedPwd)
@@ -67,7 +68,7 @@ func Test_Register(t *testing.T) {
 		}
 
 		hashedPwd := "hashedPwd"
-		te.cryptoMock.EXPECT().HashAndSalt(req.Password).
+		te.cryptoClientMock.EXPECT().HashAndSalt(req.Password).
 			Return(hashedPwd, nil)
 
 		user := buildUser("username", hashedPwd)

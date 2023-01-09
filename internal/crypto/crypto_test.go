@@ -3,13 +3,14 @@ package crypto
 import (
 	"testing"
 
-	"github.com/cliffordsimak-76-cards/gophkeeper/internal/config"
 	"github.com/stretchr/testify/require"
 	"golang.org/x/crypto/bcrypt"
+
+	"github.com/cliffordsimak-76-cards/gophkeeper/internal/config"
 )
 
 type testEnv struct {
-	crypto *CryptoImpl
+	crypto *crypto
 }
 
 func newTestEnv(t *testing.T) *testEnv {
@@ -18,7 +19,7 @@ func newTestEnv(t *testing.T) *testEnv {
 	}
 
 	return &testEnv{
-		crypto: NewCryptoImpl(cfg),
+		crypto: NewClient(cfg),
 	}
 }
 

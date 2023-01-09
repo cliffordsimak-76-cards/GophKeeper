@@ -3,13 +3,14 @@ package cardservice
 import (
 	"testing"
 
-	"github.com/cliffordsimak-76-cards/gophkeeper/internal/app/cardservice/adapters"
-	"github.com/cliffordsimak-76-cards/gophkeeper/internal/model"
-	api "github.com/cliffordsimak-76-cards/gophkeeper/pkg/gophkeeper-api"
 	"github.com/golang/mock/gomock"
 	"github.com/stretchr/testify/require"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
+
+	"github.com/cliffordsimak-76-cards/gophkeeper/internal/app/cardservice/adapters"
+	"github.com/cliffordsimak-76-cards/gophkeeper/internal/model"
+	api "github.com/cliffordsimak-76-cards/gophkeeper/pkg/gophkeeper-api"
 )
 
 func Test_Update(t *testing.T) {
@@ -23,7 +24,7 @@ func Test_Update(t *testing.T) {
 		require.Equal(t, codes.InvalidArgument, status.Code(err))
 	})
 
-	t.Run("get user id error", func(t *testing.T) {
+	t.Run("extract user id error", func(t *testing.T) {
 		te := newTestEnv(t)
 
 		req := &api.UpdateCardRequest{
@@ -34,7 +35,7 @@ func Test_Update(t *testing.T) {
 			Cvc:    "cvc",
 		}
 
-		te.authMock.EXPECT().ExtractUserIdFromContext(te.ctx).
+		te.authClientMock.EXPECT().ExtractUserIdFromContext(te.ctx).
 			Return("", errAny)
 
 		_, err := te.service.UpdateCard(te.ctx, req)
@@ -54,10 +55,10 @@ func Test_Update(t *testing.T) {
 		}
 
 		userID := "user-id"
-		te.authMock.EXPECT().ExtractUserIdFromContext(te.ctx).
+		te.authClientMock.EXPECT().ExtractUserIdFromContext(te.ctx).
 			Return(userID, nil)
 
-		te.cryptoMock.EXPECT().Encrypt(gomock.Any()).
+		te.cryptoClientMock.EXPECT().Encrypt(gomock.Any()).
 			Return("", errAny)
 
 		_, err := te.service.UpdateCard(te.ctx, req)
@@ -77,10 +78,10 @@ func Test_Update(t *testing.T) {
 		}
 
 		userID := "user-id"
-		te.authMock.EXPECT().ExtractUserIdFromContext(te.ctx).
+		te.authClientMock.EXPECT().ExtractUserIdFromContext(te.ctx).
 			Return(userID, nil)
 
-		te.cryptoMock.EXPECT().Encrypt(gomock.Any()).
+		te.cryptoClientMock.EXPECT().Encrypt(gomock.Any()).
 			Return(gomock.Any().String(), nil).
 			AnyTimes()
 
@@ -104,10 +105,10 @@ func Test_Update(t *testing.T) {
 		}
 
 		userID := "user-id"
-		te.authMock.EXPECT().ExtractUserIdFromContext(te.ctx).
+		te.authClientMock.EXPECT().ExtractUserIdFromContext(te.ctx).
 			Return(userID, nil)
 
-		te.cryptoMock.EXPECT().Encrypt(gomock.Any()).
+		te.cryptoClientMock.EXPECT().Encrypt(gomock.Any()).
 			Return(gomock.Any().String(), nil).
 			AnyTimes()
 

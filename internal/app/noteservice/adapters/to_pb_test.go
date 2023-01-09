@@ -3,9 +3,10 @@ package adapters
 import (
 	"testing"
 
+	"github.com/stretchr/testify/require"
+
 	"github.com/cliffordsimak-76-cards/gophkeeper/internal/model"
 	api "github.com/cliffordsimak-76-cards/gophkeeper/pkg/gophkeeper-api"
-	"github.com/stretchr/testify/require"
 )
 
 func Test_NoteToPb(t *testing.T) {

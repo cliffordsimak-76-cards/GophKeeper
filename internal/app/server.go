@@ -9,6 +9,10 @@ import (
 	"net"
 	"os"
 
+	"github.com/jmoiron/sqlx"
+	"google.golang.org/grpc"
+	"google.golang.org/grpc/credentials"
+
 	"github.com/cliffordsimak-76-cards/gophkeeper/internal/app/accountservice"
 	"github.com/cliffordsimak-76-cards/gophkeeper/internal/app/authservice"
 	"github.com/cliffordsimak-76-cards/gophkeeper/internal/app/cardservice"
@@ -20,8 +24,6 @@ import (
 	"github.com/cliffordsimak-76-cards/gophkeeper/internal/jwt"
 	"github.com/cliffordsimak-76-cards/gophkeeper/internal/repository"
 	api "github.com/cliffordsimak-76-cards/gophkeeper/pkg/gophkeeper-api"
-	"google.golang.org/grpc"
-	"google.golang.org/grpc/credentials"
 )
 
 const (
@@ -32,6 +34,8 @@ const (
 
 func Run(ctx context.Context, cfg *config.Config) error {
 	env := initEnv(ctx, cfg)
+
+	db.Ping(ctx, env.db, env.cfg)
 
 	serverOptions := []grpc.ServerOption{
 		grpc.UnaryInterceptor(env.auth.Unary()),
@@ -68,30 +72,30 @@ func Run(ctx context.Context, cfg *config.Config) error {
 }
 
 type Env struct {
-	db        *db.ClientImpl
+	db        *sqlx.DB
 	cfg       *config.Config
 	repoGroup *repository.Group
-	jwt       *jwt.JWTImpl
-	auth      *auth.AuthImpl
-	crypto    *crypto.CryptoImpl
+	jwt       jwt.Client
+	auth      auth.Client
+	crypto    crypto.Client
 }
 
 func initEnv(ctx context.Context, cfg *config.Config) *Env {
-	dbClient, err := db.NewClient(cfg)
+	db, err := db.NewClient(ctx, cfg)
 	if err != nil {
 		log.Fatal("error connect to db ", err)
 	}
 
-	repoGroup := repository.NewGroup(dbClient)
+	repoGroup := repository.NewGroup(db)
 
-	jwt := jwt.NewJWTImpl(cfg)
+	jwt := jwt.NewClient(cfg)
 
-	auth := auth.NewAuthImpl(jwt)
+	auth := auth.NewClient(jwt)
 
-	crypto := crypto.NewCryptoImpl(cfg)
+	crypto := crypto.NewClient(cfg)
 
 	return &Env{
-		db:        dbClient,
+		db:        db,
 		cfg:       cfg,
 		repoGroup: repoGroup,
 		jwt:       jwt,

@@ -7,24 +7,23 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/cliffordsimak-76-cards/gophkeeper/internal/db"
-	"github.com/cliffordsimak-76-cards/gophkeeper/internal/model"
 	"github.com/doug-martin/goqu/v9"
+	"github.com/jmoiron/sqlx"
+
+	"github.com/cliffordsimak-76-cards/gophkeeper/internal/model"
 )
 
 const cardsTName = "cards"
 
-type CardRepositoryImpl struct {
-	db db.Client
+type cardRepository struct {
+	db *sqlx.DB
 }
 
-func NewCardRepositoryImpl(dbClient db.Client) *CardRepositoryImpl {
-	return &CardRepositoryImpl{
-		db: dbClient,
-	}
+func NewCardRepository(db *sqlx.DB) *cardRepository {
+	return &cardRepository{db}
 }
 
-func (r *CardRepositoryImpl) Create(
+func (r *cardRepository) Create(
 	ctx context.Context,
 	card *model.Card,
 ) (*model.Card, error) {
@@ -37,7 +36,7 @@ func (r *CardRepositoryImpl) Create(
 	}
 
 	var id string
-	if err = r.db.QueryRowxContext(ctx, query).Scan(&id); err != nil {
+	if err = r.db.QueryRowContext(ctx, query).Scan(&id); err != nil {
 		return nil, fmt.Errorf("can't create card: %w", err)
 	}
 
@@ -46,7 +45,7 @@ func (r *CardRepositoryImpl) Create(
 	return card, nil
 }
 
-func (r *CardRepositoryImpl) Update(
+func (r *cardRepository) Update(
 	ctx context.Context,
 	card *model.Card,
 ) (*model.Card, error) {
@@ -68,7 +67,7 @@ func (r *CardRepositoryImpl) Update(
 	return card, nil
 }
 
-func (r *CardRepositoryImpl) Get(
+func (r *cardRepository) Get(
 	ctx context.Context,
 	id string,
 ) (*model.Card, error) {
@@ -104,7 +103,7 @@ func (filter *CardListFilter) toDataset() *goqu.SelectDataset {
 	return selectDataset
 }
 
-func (r *CardRepositoryImpl) List(
+func (r *cardRepository) List(
 	ctx context.Context,
 	filter *CardListFilter,
 ) ([]*model.Card, error) {

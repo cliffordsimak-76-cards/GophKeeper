@@ -3,12 +3,13 @@ package noteservice
 import (
 	"testing"
 
-	"github.com/cliffordsimak-76-cards/gophkeeper/internal/app/noteservice/adapters"
-	"github.com/cliffordsimak-76-cards/gophkeeper/internal/model"
-	api "github.com/cliffordsimak-76-cards/gophkeeper/pkg/gophkeeper-api"
 	"github.com/stretchr/testify/require"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
+
+	"github.com/cliffordsimak-76-cards/gophkeeper/internal/app/noteservice/adapters"
+	"github.com/cliffordsimak-76-cards/gophkeeper/internal/model"
+	api "github.com/cliffordsimak-76-cards/gophkeeper/pkg/gophkeeper-api"
 )
 
 func Test_Create(t *testing.T) {
@@ -30,7 +31,7 @@ func Test_Create(t *testing.T) {
 			Text: "text",
 		}
 
-		te.authMock.EXPECT().ExtractUserIdFromContext(te.ctx).
+		te.clientMock.EXPECT().ExtractUserIdFromContext(te.ctx).
 			Return("", errAny)
 
 		_, err := te.service.CreateNote(te.ctx, req)
@@ -47,7 +48,7 @@ func Test_Create(t *testing.T) {
 		}
 
 		userID := "user-id"
-		te.authMock.EXPECT().ExtractUserIdFromContext(te.ctx).
+		te.clientMock.EXPECT().ExtractUserIdFromContext(te.ctx).
 			Return(userID, nil)
 
 		note := adapters.CreateNoteRequestFromPb(req, userID)
@@ -68,7 +69,7 @@ func Test_Create(t *testing.T) {
 		}
 
 		userID := "user-id"
-		te.authMock.EXPECT().ExtractUserIdFromContext(te.ctx).
+		te.clientMock.EXPECT().ExtractUserIdFromContext(te.ctx).
 			Return(userID, nil)
 
 		note := &model.Note{ID: "id"}

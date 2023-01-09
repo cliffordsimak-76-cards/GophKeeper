@@ -3,13 +3,14 @@ package accountservice
 import (
 	"testing"
 
+	"github.com/stretchr/testify/require"
+	"google.golang.org/grpc/codes"
+	"google.golang.org/grpc/status"
+
 	"github.com/cliffordsimak-76-cards/gophkeeper/internal/app/accountservice/adapters"
 	"github.com/cliffordsimak-76-cards/gophkeeper/internal/model"
 	"github.com/cliffordsimak-76-cards/gophkeeper/internal/repository"
 	api "github.com/cliffordsimak-76-cards/gophkeeper/pkg/gophkeeper-api"
-	"github.com/stretchr/testify/require"
-	"google.golang.org/grpc/codes"
-	"google.golang.org/grpc/status"
 )
 
 func Test_Get(t *testing.T) {

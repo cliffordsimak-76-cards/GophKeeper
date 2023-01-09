@@ -7,24 +7,23 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/cliffordsimak-76-cards/gophkeeper/internal/db"
-	"github.com/cliffordsimak-76-cards/gophkeeper/internal/model"
 	"github.com/doug-martin/goqu/v9"
+	"github.com/jmoiron/sqlx"
+
+	"github.com/cliffordsimak-76-cards/gophkeeper/internal/model"
 )
 
 const accountsTName = "accounts"
 
-type AccountRepositoryImpl struct {
-	db db.Client
+type accountRepository struct {
+	db *sqlx.DB
 }
 
-func NewAccountRepositoryImpl(dbClient db.Client) *AccountRepositoryImpl {
-	return &AccountRepositoryImpl{
-		db: dbClient,
-	}
+func NewAccountRepository(db *sqlx.DB) *accountRepository {
+	return &accountRepository{db}
 }
 
-func (r *AccountRepositoryImpl) Create(
+func (r *accountRepository) Create(
 	ctx context.Context,
 	account *model.Account,
 ) (*model.Account, error) {
@@ -37,7 +36,7 @@ func (r *AccountRepositoryImpl) Create(
 	}
 
 	var id string
-	if err = r.db.QueryRowxContext(ctx, query).Scan(&id); err != nil {
+	if err = r.db.QueryRowContext(ctx, query).Scan(&id); err != nil {
 		return nil, fmt.Errorf("can't create account: %w", err)
 	}
 
@@ -46,7 +45,7 @@ func (r *AccountRepositoryImpl) Create(
 	return account, nil
 }
 
-func (r *AccountRepositoryImpl) Update(
+func (r *accountRepository) Update(
 	ctx context.Context,
 	account *model.Account,
 ) (*model.Account, error) {
@@ -68,7 +67,7 @@ func (r *AccountRepositoryImpl) Update(
 	return account, nil
 }
 
-func (r *AccountRepositoryImpl) Get(
+func (r *accountRepository) Get(
 	ctx context.Context,
 	id string,
 ) (*model.Account, error) {
@@ -104,7 +103,7 @@ func (filter *AccountListFilter) toDataset() *goqu.SelectDataset {
 	return selectDataset
 }
 
-func (r *AccountRepositoryImpl) List(
+func (r *accountRepository) List(
 	ctx context.Context,
 	filter *AccountListFilter,
 ) ([]*model.Account, error) {

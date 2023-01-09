@@ -11,15 +11,15 @@ import (
 type Service struct {
 	api.UnimplementedAuthServiceServer
 	repoGroup *repository.Group
-	jwt       jwt.JWT
-	crypto    crypto.Crypto
+	jwt       jwt.Client
+	crypto    crypto.Client
 }
 
 // NewService creates a new user manager
 func NewService(
 	repoGroup *repository.Group,
-	jwt jwt.JWT,
-	crypto crypto.Crypto,
+	jwt jwt.Client,
+	crypto crypto.Client,
 ) *Service {
 	return &Service{
 		repoGroup: repoGroup,

@@ -7,24 +7,23 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/cliffordsimak-76-cards/gophkeeper/internal/db"
-	"github.com/cliffordsimak-76-cards/gophkeeper/internal/model"
 	"github.com/doug-martin/goqu/v9"
+	"github.com/jmoiron/sqlx"
+
+	"github.com/cliffordsimak-76-cards/gophkeeper/internal/model"
 )
 
 const notesTName = "notes"
 
-type NoteRepositoryImpl struct {
-	db db.Client
+type noteRepository struct {
+	db *sqlx.DB
 }
 
-func NewNoteRepositoryImpl(dbClient db.Client) *NoteRepositoryImpl {
-	return &NoteRepositoryImpl{
-		db: dbClient,
-	}
+func NewNoteRepository(db *sqlx.DB) *noteRepository {
+	return &noteRepository{db}
 }
 
-func (r *NoteRepositoryImpl) Create(
+func (r *noteRepository) Create(
 	ctx context.Context,
 	note *model.Note,
 ) (*model.Note, error) {
@@ -37,7 +36,7 @@ func (r *NoteRepositoryImpl) Create(
 	}
 
 	var id string
-	if err = r.db.QueryRowxContext(ctx, query).Scan(&id); err != nil {
+	if err = r.db.QueryRowContext(ctx, query).Scan(&id); err != nil {
 		return nil, fmt.Errorf("can't create note: %w", err)
 	}
 
@@ -46,7 +45,7 @@ func (r *NoteRepositoryImpl) Create(
 	return note, nil
 }
 
-func (r *NoteRepositoryImpl) Update(
+func (r *noteRepository) Update(
 	ctx context.Context,
 	note *model.Note,
 ) (*model.Note, error) {
@@ -68,7 +67,7 @@ func (r *NoteRepositoryImpl) Update(
 	return note, nil
 }
 
-func (r *NoteRepositoryImpl) Get(
+func (r *noteRepository) Get(
 	ctx context.Context,
 	id string,
 ) (*model.Note, error) {
@@ -104,7 +103,7 @@ func (filter *NoteListFilter) toDataset() *goqu.SelectDataset {
 	return selectDataset
 }
 
-func (r *NoteRepositoryImpl) List(
+func (r *noteRepository) List(
 	ctx context.Context,
 	filter *NoteListFilter,
 ) ([]*model.Note, error) {

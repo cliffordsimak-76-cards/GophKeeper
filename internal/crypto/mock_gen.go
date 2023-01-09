@@ -10,31 +10,31 @@ import (
 	gomock "github.com/golang/mock/gomock"
 )
 
-// MockCrypto is a mock of Crypto interface.
-type MockCrypto struct {
+// MockClient is a mock of Client interface.
+type MockClient struct {
 	ctrl     *gomock.Controller
-	recorder *MockCryptoMockRecorder
+	recorder *MockClientMockRecorder
 }
 
-// MockCryptoMockRecorder is the mock recorder for MockCrypto.
-type MockCryptoMockRecorder struct {
-	mock *MockCrypto
+// MockClientMockRecorder is the mock recorder for MockClient.
+type MockClientMockRecorder struct {
+	mock *MockClient
 }
 
-// NewMockCrypto creates a new mock instance.
-func NewMockCrypto(ctrl *gomock.Controller) *MockCrypto {
-	mock := &MockCrypto{ctrl: ctrl}
-	mock.recorder = &MockCryptoMockRecorder{mock}
+// NewMockClient creates a new mock instance.
+func NewMockClient(ctrl *gomock.Controller) *MockClient {
+	mock := &MockClient{ctrl: ctrl}
+	mock.recorder = &MockClientMockRecorder{mock}
 	return mock
 }
 
 // EXPECT returns an object that allows the caller to indicate expected use.
-func (m *MockCrypto) EXPECT() *MockCryptoMockRecorder {
+func (m *MockClient) EXPECT() *MockClientMockRecorder {
 	return m.recorder
 }
 
 // Decrypt mocks base method.
-func (m *MockCrypto) Decrypt(arg0 string) (string, error) {
+func (m *MockClient) Decrypt(arg0 string) (string, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "Decrypt", arg0)
 	ret0, _ := ret[0].(string)
@@ -43,13 +43,13 @@ func (m *MockCrypto) Decrypt(arg0 string) (string, error) {
 }
 
 // Decrypt indicates an expected call of Decrypt.
-func (mr *MockCryptoMockRecorder) Decrypt(arg0 interface{}) *gomock.Call {
+func (mr *MockClientMockRecorder) Decrypt(arg0 interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Decrypt", reflect.TypeOf((*MockCrypto)(nil).Decrypt), arg0)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Decrypt", reflect.TypeOf((*MockClient)(nil).Decrypt), arg0)
 }
 
 // Encrypt mocks base method.
-func (m *MockCrypto) Encrypt(arg0 string) (string, error) {
+func (m *MockClient) Encrypt(arg0 string) (string, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "Encrypt", arg0)
 	ret0, _ := ret[0].(string)
@@ -58,13 +58,13 @@ func (m *MockCrypto) Encrypt(arg0 string) (string, error) {
 }
 
 // Encrypt indicates an expected call of Encrypt.
-func (mr *MockCryptoMockRecorder) Encrypt(arg0 interface{}) *gomock.Call {
+func (mr *MockClientMockRecorder) Encrypt(arg0 interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Encrypt", reflect.TypeOf((*MockCrypto)(nil).Encrypt), arg0)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Encrypt", reflect.TypeOf((*MockClient)(nil).Encrypt), arg0)
 }
 
 // HashAndSalt mocks base method.
-func (m *MockCrypto) HashAndSalt(arg0 string) (string, error) {
+func (m *MockClient) HashAndSalt(arg0 string) (string, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "HashAndSalt", arg0)
 	ret0, _ := ret[0].(string)
@@ -73,13 +73,13 @@ func (m *MockCrypto) HashAndSalt(arg0 string) (string, error) {
 }
 
 // HashAndSalt indicates an expected call of HashAndSalt.
-func (mr *MockCryptoMockRecorder) HashAndSalt(arg0 interface{}) *gomock.Call {
+func (mr *MockClientMockRecorder) HashAndSalt(arg0 interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "HashAndSalt", reflect.TypeOf((*MockCrypto)(nil).HashAndSalt), arg0)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "HashAndSalt", reflect.TypeOf((*MockClient)(nil).HashAndSalt), arg0)
 }
 
 // IsCorrectPassword mocks base method.
-func (m *MockCrypto) IsCorrectPassword(arg0, arg1 string) bool {
+func (m *MockClient) IsCorrectPassword(arg0, arg1 string) bool {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "IsCorrectPassword", arg0, arg1)
 	ret0, _ := ret[0].(bool)
@@ -87,7 +87,7 @@ func (m *MockCrypto) IsCorrectPassword(arg0, arg1 string) bool {
 }
 
 // IsCorrectPassword indicates an expected call of IsCorrectPassword.
-func (mr *MockCryptoMockRecorder) IsCorrectPassword(arg0, arg1 interface{}) *gomock.Call {
+func (mr *MockClientMockRecorder) IsCorrectPassword(arg0, arg1 interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "IsCorrectPassword", reflect.TypeOf((*MockCrypto)(nil).IsCorrectPassword), arg0, arg1)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "IsCorrectPassword", reflect.TypeOf((*MockClient)(nil).IsCorrectPassword), arg0, arg1)
 }

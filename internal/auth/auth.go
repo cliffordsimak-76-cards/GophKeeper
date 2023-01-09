@@ -7,11 +7,12 @@ import (
 	"fmt"
 	"log"
 
-	"github.com/cliffordsimak-76-cards/gophkeeper/internal/jwt"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/metadata"
 	"google.golang.org/grpc/status"
+
+	"github.com/cliffordsimak-76-cards/gophkeeper/internal/jwt"
 )
 
 var (
@@ -21,22 +22,24 @@ var (
 	authHeader          = "authorization"
 )
 
-type Auth interface {
+// Client represents a auth manager
+type Client interface {
 	ExtractUserIdFromContext(ctx context.Context) (string, error)
+	Unary() grpc.UnaryServerInterceptor
 }
 
-// AuthImpl is a server interceptor for authentication and authorization
-type AuthImpl struct {
-	jwt jwt.JWT
+// client is a server interceptor for authentication and authorization
+type client struct {
+	jwt jwt.Client
 }
 
-// NewAuthImpl returns a new auth interceptor
-func NewAuthImpl(jwt jwt.JWT) *AuthImpl {
-	return &AuthImpl{jwt}
+// NewClient returns a new auth interceptor
+func NewClient(jwt jwt.Client) *client {
+	return &client{jwt}
 }
 
 // Unary returns a server interceptor function to authenticate and authorize unary RPC
-func (i *AuthImpl) Unary() grpc.UnaryServerInterceptor {
+func (c *client) Unary() grpc.UnaryServerInterceptor {
 	return func(
 		ctx context.Context,
 		req interface{},
@@ -52,7 +55,7 @@ func (i *AuthImpl) Unary() grpc.UnaryServerInterceptor {
 			}
 		}
 
-		err := i.authorize(ctx)
+		err := c.authorize(ctx)
 		if err != nil {
 			return nil, err
 		}
@@ -61,12 +64,12 @@ func (i *AuthImpl) Unary() grpc.UnaryServerInterceptor {
 	}
 }
 
-func (i *AuthImpl) authorize(ctx context.Context) error {
+func (c *client) authorize(ctx context.Context) error {
 	accessToken, err := extractTokenFromContext(ctx)
 	if err != nil {
 		return status.Errorf(codes.Unauthenticated, "error authorize: %v", err)
 	}
-	err = i.jwt.Verify(accessToken)
+	err = c.jwt.Verify(accessToken)
 	if err != nil {
 		return status.Errorf(codes.Unauthenticated, "access token is invalid: %v", err)
 	}
@@ -74,14 +77,14 @@ func (i *AuthImpl) authorize(ctx context.Context) error {
 	return nil
 }
 
-// GetUserIdFromContext extracts userID from authorization context header
-func (i *AuthImpl) ExtractUserIdFromContext(ctx context.Context) (string, error) {
+// ExtractUserIdFromContext extracts userID from authorization context header
+func (c *client) ExtractUserIdFromContext(ctx context.Context) (string, error) {
 	accessToken, err := extractTokenFromContext(ctx)
 	if err != nil {
 		return "", fmt.Errorf("error get token from context: %w", err)
 	}
 
-	userID, err := i.jwt.ExtractUserID(accessToken)
+	userID, err := c.jwt.ExtractUserID(accessToken)
 	if err != nil {
 		return "", fmt.Errorf("error extract userID from token: %w", err)
 	}

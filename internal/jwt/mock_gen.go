@@ -11,31 +11,31 @@ import (
 	gomock "github.com/golang/mock/gomock"
 )
 
-// MockJWT is a mock of JWT interface.
-type MockJWT struct {
+// MockClient is a mock of Client interface.
+type MockClient struct {
 	ctrl     *gomock.Controller
-	recorder *MockJWTMockRecorder
+	recorder *MockClientMockRecorder
 }
 
-// MockJWTMockRecorder is the mock recorder for MockJWT.
-type MockJWTMockRecorder struct {
-	mock *MockJWT
+// MockClientMockRecorder is the mock recorder for MockClient.
+type MockClientMockRecorder struct {
+	mock *MockClient
 }
 
-// NewMockJWT creates a new mock instance.
-func NewMockJWT(ctrl *gomock.Controller) *MockJWT {
-	mock := &MockJWT{ctrl: ctrl}
-	mock.recorder = &MockJWTMockRecorder{mock}
+// NewMockClient creates a new mock instance.
+func NewMockClient(ctrl *gomock.Controller) *MockClient {
+	mock := &MockClient{ctrl: ctrl}
+	mock.recorder = &MockClientMockRecorder{mock}
 	return mock
 }
 
 // EXPECT returns an object that allows the caller to indicate expected use.
-func (m *MockJWT) EXPECT() *MockJWTMockRecorder {
+func (m *MockClient) EXPECT() *MockClientMockRecorder {
 	return m.recorder
 }
 
 // ExtractUserID mocks base method.
-func (m *MockJWT) ExtractUserID(accessToken string) (string, error) {
+func (m *MockClient) ExtractUserID(accessToken string) (string, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "ExtractUserID", accessToken)
 	ret0, _ := ret[0].(string)
@@ -44,13 +44,13 @@ func (m *MockJWT) ExtractUserID(accessToken string) (string, error) {
 }
 
 // ExtractUserID indicates an expected call of ExtractUserID.
-func (mr *MockJWTMockRecorder) ExtractUserID(accessToken interface{}) *gomock.Call {
+func (mr *MockClientMockRecorder) ExtractUserID(accessToken interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ExtractUserID", reflect.TypeOf((*MockJWT)(nil).ExtractUserID), accessToken)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ExtractUserID", reflect.TypeOf((*MockClient)(nil).ExtractUserID), accessToken)
 }
 
 // Generate mocks base method.
-func (m *MockJWT) Generate(user *model.User) (string, error) {
+func (m *MockClient) Generate(user *model.User) (string, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "Generate", user)
 	ret0, _ := ret[0].(string)
@@ -59,13 +59,13 @@ func (m *MockJWT) Generate(user *model.User) (string, error) {
 }
 
 // Generate indicates an expected call of Generate.
-func (mr *MockJWTMockRecorder) Generate(user interface{}) *gomock.Call {
+func (mr *MockClientMockRecorder) Generate(user interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Generate", reflect.TypeOf((*MockJWT)(nil).Generate), user)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Generate", reflect.TypeOf((*MockClient)(nil).Generate), user)
 }
 
 // Verify mocks base method.
-func (m *MockJWT) Verify(accessToken string) error {
+func (m *MockClient) Verify(accessToken string) error {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "Verify", accessToken)
 	ret0, _ := ret[0].(error)
@@ -73,7 +73,7 @@ func (m *MockJWT) Verify(accessToken string) error {
 }
 
 // Verify indicates an expected call of Verify.
-func (mr *MockJWTMockRecorder) Verify(accessToken interface{}) *gomock.Call {
+func (mr *MockClientMockRecorder) Verify(accessToken interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Verify", reflect.TypeOf((*MockJWT)(nil).Verify), accessToken)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Verify", reflect.TypeOf((*MockClient)(nil).Verify), accessToken)
 }

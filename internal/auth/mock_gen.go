@@ -9,33 +9,34 @@ import (
 	reflect "reflect"
 
 	gomock "github.com/golang/mock/gomock"
+	grpc "google.golang.org/grpc"
 )
 
-// MockAuth is a mock of Auth interface.
-type MockAuth struct {
+// MockClient is a mock of Client interface.
+type MockClient struct {
 	ctrl     *gomock.Controller
-	recorder *MockAuthMockRecorder
+	recorder *MockClientMockRecorder
 }
 
-// MockAuthMockRecorder is the mock recorder for MockAuth.
-type MockAuthMockRecorder struct {
-	mock *MockAuth
+// MockClientMockRecorder is the mock recorder for MockClient.
+type MockClientMockRecorder struct {
+	mock *MockClient
 }
 
-// NewMockAuth creates a new mock instance.
-func NewMockAuth(ctrl *gomock.Controller) *MockAuth {
-	mock := &MockAuth{ctrl: ctrl}
-	mock.recorder = &MockAuthMockRecorder{mock}
+// NewMockClient creates a new mock instance.
+func NewMockClient(ctrl *gomock.Controller) *MockClient {
+	mock := &MockClient{ctrl: ctrl}
+	mock.recorder = &MockClientMockRecorder{mock}
 	return mock
 }
 
 // EXPECT returns an object that allows the caller to indicate expected use.
-func (m *MockAuth) EXPECT() *MockAuthMockRecorder {
+func (m *MockClient) EXPECT() *MockClientMockRecorder {
 	return m.recorder
 }
 
 // ExtractUserIdFromContext mocks base method.
-func (m *MockAuth) ExtractUserIdFromContext(ctx context.Context) (string, error) {
+func (m *MockClient) ExtractUserIdFromContext(ctx context.Context) (string, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "ExtractUserIdFromContext", ctx)
 	ret0, _ := ret[0].(string)
@@ -44,7 +45,21 @@ func (m *MockAuth) ExtractUserIdFromContext(ctx context.Context) (string, error)
 }
 
 // ExtractUserIdFromContext indicates an expected call of ExtractUserIdFromContext.
-func (mr *MockAuthMockRecorder) ExtractUserIdFromContext(ctx interface{}) *gomock.Call {
+func (mr *MockClientMockRecorder) ExtractUserIdFromContext(ctx interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ExtractUserIdFromContext", reflect.TypeOf((*MockAuth)(nil).ExtractUserIdFromContext), ctx)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ExtractUserIdFromContext", reflect.TypeOf((*MockClient)(nil).ExtractUserIdFromContext), ctx)
+}
+
+// Unary mocks base method.
+func (m *MockClient) Unary() grpc.UnaryServerInterceptor {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "Unary")
+	ret0, _ := ret[0].(grpc.UnaryServerInterceptor)
+	return ret0
+}
+
+// Unary indicates an expected call of Unary.
+func (mr *MockClientMockRecorder) Unary() *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Unary", reflect.TypeOf((*MockClient)(nil).Unary))
 }

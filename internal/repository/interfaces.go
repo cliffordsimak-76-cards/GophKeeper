@@ -5,7 +5,8 @@ package repository
 import (
 	"context"
 
-	"github.com/cliffordsimak-76-cards/gophkeeper/internal/db"
+	"github.com/jmoiron/sqlx"
+
 	"github.com/cliffordsimak-76-cards/gophkeeper/internal/model"
 )
 
@@ -16,12 +17,12 @@ type Group struct {
 	NoteRepository    NoteRepository
 }
 
-func NewGroup(client db.Client) *Group {
+func NewGroup(db *sqlx.DB) *Group {
 	return &Group{
-		UserRepository:    NewUserRepositoryImpl(client),
-		CardRepository:    NewCardRepositoryImpl(client),
-		AccountRepository: NewAccountRepositoryImpl(client),
-		NoteRepository:    NewNoteRepositoryImpl(client),
+		UserRepository:    NewUserRepository(db),
+		CardRepository:    NewCardRepository(db),
+		AccountRepository: NewAccountRepository(db),
+		NoteRepository:    NewNoteRepository(db),
 	}
 }
 

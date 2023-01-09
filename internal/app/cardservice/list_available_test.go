@@ -3,12 +3,13 @@ package cardservice
 import (
 	"testing"
 
-	"github.com/cliffordsimak-76-cards/gophkeeper/internal/app/cardservice/adapters"
-	"github.com/cliffordsimak-76-cards/gophkeeper/internal/model"
-	api "github.com/cliffordsimak-76-cards/gophkeeper/pkg/gophkeeper-api"
 	"github.com/stretchr/testify/require"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
+
+	"github.com/cliffordsimak-76-cards/gophkeeper/internal/app/cardservice/adapters"
+	"github.com/cliffordsimak-76-cards/gophkeeper/internal/model"
+	api "github.com/cliffordsimak-76-cards/gophkeeper/pkg/gophkeeper-api"
 )
 
 func Test_ListAvailableCards(t *testing.T) {
@@ -17,7 +18,7 @@ func Test_ListAvailableCards(t *testing.T) {
 
 		req := &api.ListAvailableCardsRequest{}
 
-		te.authMock.EXPECT().ExtractUserIdFromContext(te.ctx).
+		te.authClientMock.EXPECT().ExtractUserIdFromContext(te.ctx).
 			Return("", errAny)
 
 		_, err := te.service.ListAvailableCards(te.ctx, req)
@@ -31,7 +32,7 @@ func Test_ListAvailableCards(t *testing.T) {
 		req := &api.ListAvailableCardsRequest{}
 
 		userID := "user-id"
-		te.authMock.EXPECT().ExtractUserIdFromContext(te.ctx).
+		te.authClientMock.EXPECT().ExtractUserIdFromContext(te.ctx).
 			Return(userID, nil)
 
 		filter := adapters.CardListFilterFromPb(req, userID)
@@ -49,7 +50,7 @@ func Test_ListAvailableCards(t *testing.T) {
 		req := &api.ListAvailableCardsRequest{}
 
 		userID := "user-id"
-		te.authMock.EXPECT().ExtractUserIdFromContext(te.ctx).
+		te.authClientMock.EXPECT().ExtractUserIdFromContext(te.ctx).
 			Return(userID, nil)
 
 		filter := adapters.CardListFilterFromPb(req, userID)

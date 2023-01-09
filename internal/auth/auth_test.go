@@ -6,31 +6,32 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/cliffordsimak-76-cards/gophkeeper/internal/jwt"
 	"github.com/golang/mock/gomock"
 	"github.com/stretchr/testify/require"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/metadata"
 	"google.golang.org/grpc/status"
+
+	"github.com/cliffordsimak-76-cards/gophkeeper/internal/jwt"
 )
 
 var errAny = errors.New("any error")
 
 type testEnv struct {
 	ctx         context.Context
-	jwtMock     *jwt.MockJWT
-	interceptor *AuthImpl
+	clientMock  *jwt.MockClient
+	interceptor *client
 }
 
 func newTestEnv(t *testing.T) *testEnv {
 	ctrl := gomock.NewController(t)
 
 	te := &testEnv{
-		ctx:     context.Background(),
-		jwtMock: jwt.NewMockJWT(ctrl),
+		ctx:        context.Background(),
+		clientMock: jwt.NewMockClient(ctrl),
 	}
 
-	te.interceptor = NewAuthImpl(te.jwtMock)
+	te.interceptor = NewClient(te.clientMock)
 	return te
 }
 
@@ -52,7 +53,7 @@ func Test_authorize(t *testing.T) {
 			metadata.Pairs(authHeader, token),
 		)
 
-		te.jwtMock.EXPECT().Verify(token).
+		te.clientMock.EXPECT().Verify(token).
 			Return(errAny)
 
 		err := te.interceptor.authorize(te.ctx)
@@ -69,7 +70,7 @@ func Test_authorize(t *testing.T) {
 			metadata.Pairs(authHeader, token),
 		)
 
-		te.jwtMock.EXPECT().Verify(token).
+		te.clientMock.EXPECT().Verify(token).
 			Return(nil)
 
 		err := te.interceptor.authorize(te.ctx)
@@ -95,7 +96,7 @@ func Test_ExtractUserIdFromContext(t *testing.T) {
 			metadata.Pairs(authHeader, token),
 		)
 
-		te.jwtMock.EXPECT().ExtractUserID(token).
+		te.clientMock.EXPECT().ExtractUserID(token).
 			Return("", errAny)
 
 		_, err := te.interceptor.ExtractUserIdFromContext(te.ctx)
@@ -113,7 +114,7 @@ func Test_ExtractUserIdFromContext(t *testing.T) {
 		)
 
 		userID := "userID"
-		te.jwtMock.EXPECT().ExtractUserID(token).
+		te.clientMock.EXPECT().ExtractUserID(token).
 			Return(userID, nil)
 
 		result, err := te.interceptor.ExtractUserIdFromContext(te.ctx)

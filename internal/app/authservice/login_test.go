@@ -3,11 +3,12 @@ package authservice
 import (
 	"testing"
 
-	"github.com/cliffordsimak-76-cards/gophkeeper/internal/model"
-	api "github.com/cliffordsimak-76-cards/gophkeeper/pkg/gophkeeper-api"
 	"github.com/stretchr/testify/require"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
+
+	"github.com/cliffordsimak-76-cards/gophkeeper/internal/model"
+	api "github.com/cliffordsimak-76-cards/gophkeeper/pkg/gophkeeper-api"
 )
 
 func Test_Login(t *testing.T) {
@@ -49,7 +50,7 @@ func Test_Login(t *testing.T) {
 		te.userRepoMock.EXPECT().Get(te.ctx, "username").
 			Return(user, nil)
 
-		te.cryptoMock.EXPECT().IsCorrectPassword(user.HashedPassword, req.Password).
+		te.cryptoClientMock.EXPECT().IsCorrectPassword(user.HashedPassword, req.Password).
 			Return(false)
 
 		_, err := te.service.Login(te.ctx, req)
@@ -69,10 +70,10 @@ func Test_Login(t *testing.T) {
 		te.userRepoMock.EXPECT().Get(te.ctx, "username").
 			Return(user, nil)
 
-		te.cryptoMock.EXPECT().IsCorrectPassword(user.HashedPassword, req.Password).
+		te.cryptoClientMock.EXPECT().IsCorrectPassword(user.HashedPassword, req.Password).
 			Return(true)
 
-		te.jwtMock.EXPECT().Generate(user).
+		te.jwtClientMock.EXPECT().Generate(user).
 			Return("", errAny)
 
 		_, err := te.service.Login(te.ctx, req)
@@ -92,11 +93,11 @@ func Test_Login(t *testing.T) {
 		te.userRepoMock.EXPECT().Get(te.ctx, "username").
 			Return(user, nil)
 
-		te.cryptoMock.EXPECT().IsCorrectPassword(user.HashedPassword, req.Password).
+		te.cryptoClientMock.EXPECT().IsCorrectPassword(user.HashedPassword, req.Password).
 			Return(true)
 
 		token := "token"
-		te.jwtMock.EXPECT().Generate(user).
+		te.jwtClientMock.EXPECT().Generate(user).
 			Return(token, nil)
 
 		response, err := te.service.Login(te.ctx, req)
